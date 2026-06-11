@@ -1,0 +1,214 @@
+/* ============================================================
+   BLISSCO — Colors & Type foundations
+   Massasje · Terapi · Kobido — Haugesund, Norge
+   ------------------------------------------------------------
+   Fonts: Cormorant Garamond (serif display) + Jost (sans body).
+   Self-hosted from the client's own variable .ttf files in /fonts.
+   ============================================================ */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('fonts/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('fonts/CormorantGaramond-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Jost';
+  src: url('fonts/Jost-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Jost';
+  src: url('fonts/Jost-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- BRAND PALETTE (pulled from brand pixels) ---------- */
+  --espresso:        #4A2E2A;  /* primary dark — card bgs, text on cream      */
+  --espresso-deep:   #3B231F;  /* deeper shade for layering / hovers          */
+  --krem:            #FCF7F2;  /* primary light — card bgs, text on espresso  */
+  --zloto:           #BE9220;  /* gold accent — the "10%" spice               */
+  --zloto-jasne:     #CC9D22;  /* light gold — hover / highlight              */
+  --zloto-ciemne:    #A57E1B;  /* dark gold — pressed / borders               */
+  --mocha:           #8B6F5C;  /* mid tone — captions, frames, muted text     */
+  --bez:             #E8DCCE;  /* light beige — frame fills, breathing room   */
+  --grafit:          #1A1A1A;  /* graphite — black logo, hard text            */
+
+  /* ---------- SEMANTIC: SURFACES ---------- */
+  --bg:              var(--krem);        /* default page surface              */
+  --bg-alt:          var(--bez);         /* secondary surface / fills         */
+  --bg-inverse:      var(--espresso);    /* dark sections / dark cards        */
+  --surface-card:    #FFFFFF;            /* raised card on cream              */
+  --line:            rgba(74,46,42,.10); /* hairline dividers on light        */
+  --line-strong:     rgba(74,46,42,.22); /* stronger dividers                 */
+  --line-inverse:    rgba(252,247,242,.16);
+
+  /* ---------- SEMANTIC: TEXT ---------- */
+  --fg1:             var(--espresso);          /* primary text on light       */
+  --fg2:             rgba(74,46,42,.82);        /* body text                   */
+  --fg3:             rgba(74,46,42,.62);        /* muted / secondary           */
+  --fg-accent:       var(--zloto);              /* accent / eyebrow            */
+  --fg-on-dark:      var(--krem);               /* primary text on espresso    */
+  --fg-on-dark-2:    rgba(252,247,242,.72);     /* muted on espresso           */
+  --fg-on-dark-3:    rgba(252,247,242,.45);     /* faint meta on espresso      */
+
+  /* ---------- SEMANTIC: STATUS (warm-shifted, used sparingly) ---------- */
+  --danger:          #B6534A;  /* the only "alert" red — muted brick, never neon */
+  --success:         #7C7A3E;  /* warm olive for confirmations                   */
+
+  /* ---------- TYPE FAMILIES ---------- */
+  --serif:           'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans:            'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---------- TYPE SCALE (fluid-ish, rem-based) ---------- */
+  --fs-display:      4.6rem;   /* cover / hero serif                          */
+  --fs-h1:           2.9rem;
+  --fs-h2:           2.2rem;
+  --fs-h3:           1.6rem;
+  --fs-lead:         1.18rem;  /* intro paragraph                            */
+  --fs-body:         1rem;
+  --fs-small:        .88rem;
+  --fs-caption:      .78rem;   /* uppercase tracked labels                   */
+  --fs-eyebrow:      .72rem;
+
+  /* ---------- TRACKING (letter-spacing) ---------- */
+  --track-eyebrow:   .42em;    /* the wide brand eyebrow                     */
+  --track-caption:   .28em;    /* card subtitles "HOT STONE · KOBIDO"        */
+  --track-display:   .22em;    /* uppercase serif card titles                */
+  --track-tight:     .01em;
+
+  /* ---------- WEIGHTS ---------- */
+  --w-light:   300;
+  --w-regular: 400;
+  --w-medium:  500;
+  --w-semibold:600;
+
+  /* ---------- RADII ---------- */
+  --r-sm:  4px;
+  --r-md:  6px;
+  --r-lg:  10px;
+  --r-pill: 999px;
+
+  /* ---------- SHADOWS (warm-tinted, never neutral grey) ---------- */
+  --shadow-sm:  0 4px 16px rgba(74,46,42,.08);
+  --shadow-md:  0 8px 30px rgba(74,46,42,.12);
+  --shadow-lg:  0 16px 50px rgba(74,46,42,.16);
+  --shadow-gold:0 8px 30px rgba(190,146,32,.22);
+
+  /* ---------- SPACING (8px base) — scale runs generous; whitespace is luxury ---------- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --sp-9: 96px; --sp-10: 128px; --sp-11: 160px; --sp-12: 200px;
+
+  /* ---------- MOTION ---------- */
+  --ease:        cubic-bezier(.22,.61,.36,1);  /* gentle ease-out             */
+  --dur-fast:    .18s;
+  --dur:         .28s;
+  --dur-slow:    .5s;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Reusable classes that encode the brand's type system.
+   ============================================================ */
+
+.bl-eyebrow {
+  font-family: var(--sans);
+  font-weight: var(--w-medium);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+.bl-h1 {
+  font-family: var(--serif);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  letter-spacing: var(--track-tight);
+  color: var(--fg1);
+}
+
+.bl-h2 {
+  font-family: var(--serif);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-h2);
+  line-height: 1.15;
+  color: var(--fg1);
+}
+
+.bl-h3 {
+  font-family: var(--serif);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  color: var(--fg1);
+}
+
+/* The signature card title: uppercase high-contrast serif, wide-tracked */
+.bl-display-title {
+  font-family: var(--serif);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-h2);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--fg1);
+}
+
+.bl-lead {
+  font-family: var(--sans);
+  font-weight: var(--w-light);
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--fg2);
+}
+
+.bl-body {
+  font-family: var(--sans);
+  font-weight: var(--w-light);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--fg2);
+}
+
+/* Card subtitle / service line: "HOT STONE · KOBIDO" */
+.bl-caption {
+  font-family: var(--sans);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--track-caption);
+  text-transform: uppercase;
+  color: var(--mocha);
+}
+
+/* Italic serif quote / signature — "Ro, glød og kvalitet." */
+.bl-serif-italic {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: var(--w-regular);
+  color: var(--zloto);
+}
+
+body {
+  font-family: var(--sans);
+  font-weight: var(--w-light);
+  line-height: 1.7;
+  color: var(--fg1);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
