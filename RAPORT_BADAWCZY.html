@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Blissco — Raport badawczy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --espresso:#4A2E2A; --espresso-deep:#3B231F; --krem:#FCF7F2;
+  --zloto:#BE9220; --zloto-jasne:#CC9D22; --zloto-ciemne:#A57E1B;
+  --mocha:#8B6F5C; --bez:#E8DCCE; --grafit:#1A1A1A;
+  --surface-card:#FFFFFF;
+  --line:rgba(74,46,42,.10); --line-strong:rgba(74,46,42,.22); --line-inverse:rgba(252,247,242,.16);
+  --fg1:var(--espresso); --fg2:rgba(74,46,42,.82); --fg3:rgba(74,46,42,.62);
+  --fg-on-dark:var(--krem); --fg-on-dark-2:rgba(252,247,242,.72); --fg-on-dark-3:rgba(252,247,242,.45);
+  --danger:#B6534A; --success:#7C7A3E;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Jost',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --track-eyebrow:.42em; --track-caption:.28em; --track-display:.22em;
+  --r-sm:4px; --r-md:6px; --r-lg:10px; --r-pill:999px;
+  --shadow-sm:0 4px 16px rgba(74,46,42,.08);
+  --shadow-md:0 8px 30px rgba(74,46,42,.12);
+  --shadow-lg:0 16px 50px rgba(74,46,42,.16);
+  --ease:cubic-bezier(.22,.61,.36,1); --dur:.28s;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:300;line-height:1.7;color:var(--fg1);background:var(--krem);-webkit-font-smoothing:antialiased}
+
+.hero{position:relative;background:var(--espresso);color:var(--fg-on-dark);overflow:hidden;padding:96px 24px 80px;text-align:center}
+.hero::after{content:"";position:absolute;top:-30%;right:-10%;width:60%;height:120%;background:radial-gradient(circle,rgba(190,146,32,.16),transparent 60%);pointer-events:none}
+.hero-inner{position:relative;max-width:780px;margin:0 auto;z-index:1}
+.hero img.logo{height:38px;margin-bottom:40px;opacity:.95}
+.eyebrow{font-family:var(--sans);font-weight:500;font-size:.72rem;letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--zloto)}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:4rem;line-height:1.04;letter-spacing:.01em;margin:22px 0 18px}
+.hero .sub{font-family:var(--sans);font-weight:300;font-size:1.05rem;color:var(--fg-on-dark-2);max-width:540px;margin:0 auto}
+.hero .meta{margin-top:30px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-on-dark-3)}
+.badge{display:inline-block;margin-top:34px;padding:11px 26px;border:1px solid var(--line-inverse);border-radius:var(--r-pill);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--zloto)}
+
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+section.block{padding:64px 0;border-bottom:1px solid var(--line)}
+section.block:last-of-type{border-bottom:none}
+.sec-eyebrow{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--zloto);display:block;margin-bottom:12px}
+h2.sec{font-family:var(--serif);font-weight:400;font-size:2.3rem;line-height:1.12;margin-bottom:96px}
+h3.sub{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:64px 0 14px}
+h4.subsub{font-family:var(--sans);font-weight:500;font-size:.92rem;letter-spacing:.02em;color:var(--espresso);margin:24px 0 10px}
+p{font-size:1rem;color:var(--fg2);margin-bottom:14px}
+strong{font-weight:500;color:var(--espresso)}
+em{font-style:italic;font-family:var(--serif);font-size:1.08em;color:var(--mocha)}
+a{color:var(--zloto-ciemne);text-decoration:none;border-bottom:1px solid rgba(165,126,27,.35)}
+a:hover{color:var(--zloto)}
+ul,ol{margin:0 0 16px 0;padding-left:0;list-style:none}
+ul li,ol li{position:relative;padding-left:26px;margin-bottom:9px;font-size:1rem;color:var(--fg2)}
+ul li::before{content:"·";position:absolute;left:8px;top:-2px;color:var(--zloto);font-size:1.4em;font-weight:600}
+ol{counter-reset:li}
+ol li::before{counter-increment:li;content:counter(li);position:absolute;left:0;top:3px;font-family:var(--serif);font-size:.9rem;color:var(--zloto);font-weight:600;width:18px;height:18px;line-height:18px;text-align:center}
+
+.toc{background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);padding:30px 34px;margin:-48px auto 0;max-width:880px;position:relative;z-index:2}
+.toc h4{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--mocha);margin-bottom:16px}
+.toc ol{columns:2;column-gap:40px}
+.toc li{padding-left:24px;margin-bottom:8px;font-size:.92rem;break-inside:avoid}
+.toc li::before{top:3px}
+.toc a{color:var(--fg2);border:none}
+.toc a:hover{color:var(--zloto-ciemne)}
+
+.card{background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);padding:26px 30px;margin:20px 0}
+.callout{background:var(--bez);border-left:3px solid var(--zloto);border-radius:var(--r-sm);padding:18px 24px;margin:20px 0;font-size:.97rem;color:var(--fg2)}
+.callout.warn{background:rgba(182,83,74,.07);border-left-color:var(--danger)}
+.callout.warn strong{color:var(--danger)}
+.note{font-size:.9rem;color:var(--fg3);font-style:italic}
+
+.points{display:grid;gap:16px;margin:26px 0}
+.point{background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);padding:24px 26px;display:flex;gap:20px;align-items:flex-start}
+.point .n{font-family:var(--serif);font-size:2.1rem;font-weight:400;color:var(--zloto);line-height:1;min-width:32px}
+.point p{margin:0;font-size:.98rem}
+
+.dark-card{background:var(--espresso);color:var(--fg-on-dark);border-radius:var(--r-lg);padding:30px 34px;margin:24px 0;box-shadow:var(--shadow-md)}
+.dark-card h3{color:var(--krem);font-family:var(--serif);font-weight:500;font-size:1.3rem;margin-bottom:12px}
+.dark-card p{color:var(--fg-on-dark-2)}
+.dark-card strong{color:var(--krem)}
+.dark-card .note{color:var(--fg-on-dark-3)}
+
+.tbl-wrap{overflow-x:auto;margin:22px 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem;background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+thead th{background:var(--bez);color:var(--espresso);font-family:var(--sans);font-weight:500;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;text-align:left;padding:12px 15px}
+tbody td{padding:12px 15px;border-top:1px solid var(--line);color:var(--fg2);vertical-align:top}
+tbody tr:hover{background:rgba(232,220,206,.25)}
+table strong{color:var(--espresso)}
+
+.pill{display:inline-block;font-family:var(--sans);font-weight:500;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:var(--r-pill);white-space:nowrap}
+.pill.ok{background:rgba(124,122,62,.14);color:var(--success)}
+.pill.do{background:rgba(182,83,74,.12);color:var(--danger)}
+.pill.gold{background:rgba(190,146,32,.14);color:var(--zloto-ciemne)}
+
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+.col-card{border-radius:var(--r-lg);padding:22px 24px}
+.col-card.good{background:rgba(124,122,62,.07);border:1px solid rgba(124,122,62,.2)}
+.col-card.bad{background:rgba(182,83,74,.06);border:1px solid rgba(182,83,74,.18)}
+.col-card h4{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px}
+.col-card.good h4{color:var(--success)}
+.col-card.bad h4{color:var(--danger)}
+.col-card li{font-size:.92rem;padding-left:20px}
+.col-card li::before{font-size:1.1em;left:6px}
+
+.ascii-map{background:var(--bez);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 24px;margin:20px 0;overflow-x:auto}
+.ascii-map pre{font-family:'Courier New',monospace;font-size:.82rem;line-height:1.5;color:var(--espresso);white-space:pre}
+
+.errc td:first-child{font-weight:500;color:var(--espresso);width:130px;background:rgba(232,220,206,.3)}
+
+.footer{background:var(--espresso);color:var(--fg-on-dark);text-align:center;padding:70px 24px 60px}
+.footer img.logo{height:32px;margin-bottom:26px;opacity:.92}
+.footer .quote{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--zloto);margin-bottom:24px}
+.footer .meta{font-size:.76rem;letter-spacing:.08em;color:var(--fg-on-dark-3);max-width:620px;margin:0 auto;line-height:1.8}
+
+@media(max-width:680px){
+  .hero{padding:64px 20px 56px}.hero h1{font-size:2.7rem}
+  h2.sec{font-size:1.8rem;margin-bottom:64px}
+  .toc ol{columns:1}.cols2{grid-template-columns:1fr}
+}
+.topnav{position:sticky;top:0;z-index:50;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;background:var(--krem);border-bottom:1px solid var(--line);padding:11px 14px}
+.topnav a{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);text-decoration:none;border:none;padding:6px 14px;border-radius:999px;transition:background .2s,color .2s}
+.topnav a:hover{color:var(--espresso);background:rgba(232,220,206,.5)}
+.topnav a.active{color:var(--espresso);background:var(--bez)}
+</style>
+</head>
+<body>
+<nav class="topnav">
+<a href="DASHBOARD_BLISSCO.html">Dashboard</a>
+<a href="AUDYT_INSTAGRAM.html">Audyt IG</a>
+<a href="RAPORT_BADAWCZY.html" class="active">Raport badawczy</a>
+<a href="STRATEGIA_3M.html">Strategia 3M</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <img class="logo" src="assets/blissco-logo-zlote.png" alt="blissco">
+    <div class="eyebrow">Raport badawczy · Etap 1 — Fundament</div>
+    <h1>Raport badawczy</h1>
+    <p class="sub">Nisza Kobido · rynek wellness w Norwegii · konkurencja · trendy. Blissco Massasje og Terapi, Haugesund.</p>
+    <div class="badge">Nisza · Rynek · Konkurencja · Trendy</div>
+    <div class="meta">Blissco · 04.06.2026 (akt. 11.06.2026) · przygotował GMERK</div>
+  </div>
+</header>
+
+<nav class="toc">
+  <h4>Spis treści</h4>
+  <ol>
+    <li><a href="#r1">Streszczenie wykonawcze</a></li>
+    <li><a href="#r2">Nisza Kobido</a></li>
+    <li><a href="#r3">Rynek wellness (global + NO)</a></li>
+    <li><a href="#r3a">Wielkość rynku — TAM/SAM/SOM</a></li>
+    <li><a href="#r4">Trend: naturalny anti-aging</a></li>
+    <li><a href="#r5">Świadomość Kobido w NO</a></li>
+    <li><a href="#r6">Analiza konkurencji</a></li>
+    <li><a href="#r7">Pozycja Blissco (dane IG)</a></li>
+    <li><a href="#r8">Trendy contentowe Reels</a></li>
+    <li><a href="#r9">Benchmark kont IG</a></li>
+    <li><a href="#r10">Co konwertuje + błędy</a></li>
+    <li><a href="#r11">Wnioski strategiczne</a></li>
+    <li><a href="#r11a">Blue Ocean — ERRC + nie-klienci</a></li>
+    <li><a href="#r12">Do weryfikacji</a></li>
+    <li><a href="#r13">Źródła</a></li>
+  </ol>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section class="block" id="r1">
+  <span class="sec-eyebrow">01 — Podsumowanie</span>
+  <h2 class="sec">Streszczenie wykonawcze</h2>
+  <p><strong>Blissco wchodzi w niszę, która rośnie strukturalnie i lokalnie jest niemal pusta.</strong> Trzy wnioski, które decydują o strategii:</p>
+  <div class="points">
+    <div class="point"><span class="n">1</span><p><strong>Rynek sprzyja.</strong> Kobido leży na przecięciu trzech najszybciej rosnących segmentów: spa (CAGR 8,6%), masaż twarzy (10,1%) i anti-aging (28,6% segmentu). Norwegowie wydają na „skjønnhet" <strong>9–10 mld NOK rocznie</strong>; premium beauty rośnie (+5% r/r).</p></div>
+    <div class="point"><span class="n">2</span><p><strong>Trend kulturowy działa na korzyść.</strong> Wyraźny odwrót od botoksu i fillerów („filler fatigue") ku <strong>naturalnemu anti-agingowi</strong>. Kobido = <em>„naturlig ansiktsløftning uten inngrep"</em> — dokładnie to, czego szuka rynek. Zabiegi inwazyjne tracą (−40% r/r dla niektórych).</p></div>
+    <div class="point"><span class="n">3</span><p><strong>Lokalnie pole jest wolne.</strong> W Haugesund brak dedykowanego, wyspecjalizowanego gabinetu Kobido z aktywnym contentem. Dojrzała konkurencja Kobido jest dopiero w Stavanger/Bergen.</p></div>
+  </div>
+  <div class="callout"><strong>Co z tego wynika:</strong> okno first-movera jest otwarte, ale zamknie się, gdy ktoś lokalny doda Kobido. <strong>Strategia: zająć kategorię teraz</strong> — regularne rolki Kobido po norwesku, edukacja rynku, pozycjonowanie „naturalny lifting bez igły". Cena 990 NOK dobrze ustawiona; jest miejsce na podwyżkę po 2–3 case studies.</div>
+</section>
+
+<!-- 2 -->
+<section class="block" id="r2">
+  <span class="sec-eyebrow">02 — Nisza</span>
+  <h2 class="sec">Nisza Kobido — czym jest i jak działa</h2>
+  <ul>
+    <li><strong>Pochodzenie:</strong> Kobido (古美道) = „starożytna droga piękna", technika z Japonii ~XV w., rytuał dworu cesarskiego i gejsz.</li>
+    <li><strong>Na czym polega:</strong> wyłącznie <strong>manualna</strong> technika (bez urządzeń i igieł), oparta na Anma i shiatsu — 48 kategorii ruchów na mięśniach i meridianach twarzy, szyi, głowy.</li>
+    <li><strong>Efekty (kosmetyczne):</strong> pobudzenie krążenia i drenażu limfatycznego, stymulacja kolagenu, redukcja napięcia i obrzęków, <strong>naturalny lifting</strong> — bez ingerencji.</li>
+    <li><strong>Model sesji = produkt pakietowy:</strong> trwały efekt po serii <strong>6 sesji co 2 tygodnie</strong> + podtrzymanie. Sesja 60–90 min → naturalna podstawa pod <strong>pakiet 6 sesji</strong> (przewidywalny przychód, wyższy LTV).</li>
+    <li><strong>Dowód:</strong> badanie (27 kobiet, 10 zabiegów) — redukcja napięcia i zmiana konturu twarzy (mała próba, traktować jako wskazówkę).</li>
+  </ul>
+</section>
+
+<!-- 3 -->
+<section class="block" id="r3">
+  <span class="sec-eyebrow">03 — Rynek</span>
+  <h2 class="sec">Rynek wellness i masażu — globalnie i w Norwegii</h2>
+  <h3 class="sub">Globalnie</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Metryka</th><th>Wartość</th></tr></thead>
+    <tbody>
+      <tr><td>Gospodarka wellness 2024</td><td><strong>6,8 bln USD</strong> → 9,8 bln (2029)</td></tr>
+      <tr><td>Rynek usług spa</td><td><strong>102 mld USD (2025)</strong> → 194 mld (2033), CAGR 8,6%</td></tr>
+      <tr><td>Rynek masażu twarzy</td><td><strong>2,3 mld USD (2025)</strong> → 5,9 mld (2035), CAGR 10,1%</td></tr>
+      <tr><td>Anti-aging — udział w masażu twarzy</td><td><strong>28,6%</strong> (największy segment)</td></tr>
+    </tbody>
+  </table></div>
+  <h3 class="sub">Norwegia</h3>
+  <ul>
+    <li><strong>Beauty & Personal Care:</strong> segment premium <strong>10,8 mld NOK w 2025 (+5% r/r)</strong>.</li>
+    <li><strong>Wydatki:</strong> branża obraca <strong>~9–10 mld NOK/rok</strong>; kobiety ~3 300 NOK/rok u fryzjera, ~1 300 NOK/rok na pielęgnację skóry; średni klient ~2 000 NOK/mies. na „skjønnhet".</li>
+    <li><strong>Cena Kobido w NO: 900–1 600 NOK / sesja 60–90 min</strong> → potwierdza, że <strong>990 NOK Blissco to rozsądne premium</strong>.</li>
+    <li><strong>Sezonowość:</strong> brak twardych danych NO; hipoteza: piki XI–XII (bony), I (postanowienia), wiosna przed latem. <em>(hipoteza — sek. 12)</em></li>
+  </ul>
+</section>
+
+<!-- 3a -->
+<section class="block" id="r3a">
+  <span class="sec-eyebrow">03a — Market sizing</span>
+  <h2 class="sec">Wielkość rynku lokalnego (TAM / SAM / SOM)</h2>
+  <p class="note">Metoda wg najlepszych praktyk (HubSpot, Seer). Dla gabinetu 1-osobowego SOM jest ograniczony pojemnością grafiku, nie udziałem w rynku — liczymy bottom-up. Liczby „do uściślenia" wymagają potwierdzenia (populacja, grafik, obłożenie).</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Warstwa</th><th>Co to</th><th>Szacunek</th></tr></thead>
+    <tbody>
+      <tr><td><strong>TAM</strong></td><td>cały lokalny popyt na pielęgnację twarzy/anti-aging (Haugalandet): ~22 tys. kobiet 25–59 × ~2 000 NOK/rok</td><td><strong>~44 mln NOK/rok</strong></td></tr>
+      <tr><td><strong>SAM</strong></td><td>segment premium / naturalny anti-aging w zasięgu (~10% TAM × 2,5 zabiegu × 990 NOK)</td><td><strong>~5,4 mln NOK/rok</strong></td></tr>
+      <tr><td><strong>SOM</strong></td><td>realny cel — ograniczony pojemnością (bottom-up), 50–70% obłożenia</td><td><strong>~475–665 tys. NOK/rok</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="dark-card">
+    <h3>Kluczowy wniosek</h3>
+    <p>Nawet jeśli SAM to ~5 mln NOK, Justyna fizycznie nie zarobi więcej niż <strong>~950 tys. NOK/rok</strong> (sufit przy 100% obłożenia) bez podniesienia ceny lub zatrudnienia. <strong>Wzrost przychodu = wyższa cena + pakiety (LTV), nie „większy udział w rynku".</strong> To uzasadnia premium + pakiet 6 sesji + podwyżkę po case studies.</p>
+  </div>
+  <h4 class="subsub">Symulacja obłożenia — kiedy podnieść cenę</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Obłożenie</th><th>Zabiegi/mies</th><th>Przychód/mies (990 NOK)</th><th>Rok</th></tr></thead>
+    <tbody>
+      <tr><td>50%</td><td>~40</td><td>~39 600 NOK</td><td>~475 tys.</td></tr>
+      <tr><td>65%</td><td>~52</td><td>~51 500 NOK</td><td>~618 tys.</td></tr>
+      <tr><td>80%</td><td>~64</td><td>~63 400 NOK</td><td>~760 tys.</td></tr>
+      <tr><td>100% (sufit)</td><td>~80</td><td>~79 200 NOK</td><td>~950 tys.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><strong>Trigger podwyżki:</strong> gdy obłożenie stabilnie przekracza ~75% i pojawiają się listy oczekujących, jedyną dźwignią wzrostu jest <strong>cena</strong> (990 → 1 200–1 300 NOK). Podwyżka o ~25% przy pełnym grafiku daje <strong>~+190 tys. NOK/rok bez dodatkowej godziny pracy</strong>.</div>
+</section>
+
+<!-- 4 -->
+<section class="block" id="r4">
+  <span class="sec-eyebrow">04 — Trend</span>
+  <h2 class="sec">Naturalny anti-aging vs botoks</h2>
+  <p>To najmocniejszy wiatr w żagle Blissco.</p>
+  <ul>
+    <li><strong>„Filler fatigue":</strong> pacjenci nie chcą wyglądać „frozen / too done"; „Botox brow" stał się estetyczną czerwoną flagą.</li>
+    <li><strong>„Regenerative reset" 2025–26:</strong> odejście od wypełniaczy ku pobudzaniu własnego kolagenu; „overfilled face is out".</li>
+    <li><strong>Twarde sygnały:</strong> &gt;60% konsumentów 18–35 wybiera „natural/organic"; niektóre zabiegi inwazyjne <strong>−40% r/r</strong>.</li>
+    <li><strong>Gua sha, face yoga</strong> rosną jako „naturalne" — Kobido jest ich <strong>profesjonalną, premium wersją</strong>.</li>
+  </ul>
+  <div class="callout"><strong>Przekaz dla treści:</strong> <em>„Kobido — naturlig ansiktsløftning uten nåler, uten inngrep."</em> (Naturalny lifting bez igieł, bez ingerencji.)</div>
+</section>
+
+<!-- 5 -->
+<section class="block" id="r5">
+  <span class="sec-eyebrow">05 — Świadomość</span>
+  <h2 class="sec">Świadomość Kobido w Norwegii — okno edukacyjne</h2>
+  <ul>
+    <li>Termin <strong>istnieje, ale jest niszowy.</strong> Norweskie strony zawsze tłumaczą: „Kobido (japansk ansiktsmassasje)", „naturlig ansiktsløft uten inngrep" — znak, że przeciętny klient <strong>nie zna słowa „Kobido"</strong>.</li>
+  </ul>
+  <p><strong>Implikacja — content dwutorowy:</strong></p>
+  <ol>
+    <li><strong>Hasła-edukatory, których ludzie szukają:</strong> „japansk ansiktsmassasje", „naturlig ansiktsløftning", „ansiktsmassasje Haugesund".</li>
+    <li><strong>Budowa marki terminu „Kobido"</strong> jako wyróżnika premium.</li>
+  </ol>
+  <div class="callout">Niska świadomość = <strong>szansa</strong>, by Blissco stało się <strong>pierwszym lokalnym skojarzeniem z Kobido</strong> i edukatorem rynku.</div>
+</section>
+
+<!-- 6 -->
+<section class="block" id="r6">
+  <span class="sec-eyebrow">06 — Konkurencja</span>
+  <h2 class="sec">Analiza konkurencji</h2>
+
+  <h3 class="sub">6.1 Lokalnie — kategoria Kobido praktycznie wolna</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Gabinet</th><th>Profil</th><th>Cena</th><th>Google</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hi Glow Klinikk / Frakkagjerd</strong> (Karmsund/Haugesund) — <em>to ten sam podmiot</em></td><td>Szerokie menu: hudpleie, laser, Dermapen; <strong>Kobido w cenniku</strong> (1 z kilkudziesięciu usług)</td><td><strong>990 / 650 NOK</strong> <span class="pill ok">potwierdzone</span></td><td><strong>5,0 (2 opinie)</strong></td></tr>
+      <tr><td><strong>Klinikk Haugesund</strong></td><td>Ansiktsbehandlinger (ZO), laser</td><td>od 650/45 min</td><td>—</td></tr>
+      <tr><td><strong>Atlas Helse</strong></td><td>Massasjeterapi + ansiktsmassasje relaks</td><td><em>do weryf.</em></td><td><strong>4,8/5 (56)</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><strong>Wniosek:</strong> bezpośredniego, wyspecjalizowanego konkurenta Kobido „1:1" w Haugesund <strong>nie ma</strong>. Najbliżej Hi Glow — ale jako część szerokiego menu, nie nisza.</div>
+  <p class="note">Konkurenci obecni na Instagramie (z realnymi danymi: followers, nisza, czy robią Kobido) — zebrani i zweryfikowani w <strong>audycie IG, sek. 14</strong>: Hi Glow/Frakkagjerd (263, ma Kobido), albatrosspa.no (1 612, spa Sveio), anehedman (2 190, massasjeterapi/healing).</p>
+
+  <h3 class="sub">6.2 Konkurenci pośredni</h3>
+  <ul>
+    <li><strong>Josefine Hudpleie</strong> (Strandgata 140) — premium hudpleie, ta sama klientka, brak Kobido — <span class="pill do">średnie</span></li>
+    <li><strong>Haugesund Hudpleieklinikk</strong> — silna marka „siden 1980" — <span class="pill do">średnie</span></li>
+    <li><strong>Malous hud og velvære</strong> — ansiktsmassasje od ~900 NOK — <span class="pill do">średnie</span></li>
+    <li><strong>AURA SKIN, Estetica, Studio Essens</strong> — hudpleie/estetyka — niskie</li>
+    <li><strong>Masaże tajskie</strong> — relaks ciała, inny segment — niskie (konkurują o „budżet na relaks")</li>
+  </ul>
+
+  <h3 class="sub">6.3 Konkurencja regionalna (Stavanger, Bergen)</h3>
+  <ul>
+    <li><strong>Stavanger:</strong> Néroli Hudpleie („Kobido – japansk anti age ansiktsmassasje"), Bumbum, Bb Salong.</li>
+    <li><strong>Bergen:</strong> Frøken Dings — Kobido przez „offentlig godkjent helsepersonell", 13+ lat — silne pozycjonowanie eksperckie.</li>
+    <li><strong>Krajowo (IG):</strong> @naturalfaceliftoslo — najdojrzalszy content Kobido w NO.</li>
+  </ul>
+  <p class="note">Regionalnie Kobido jest zajęte przez specjalistów z lepszym contentem — ale w Haugesund tej oferty nie ma. Blissco walczy o klientki, które dziś musiałyby jechać do Stavanger.</p>
+
+  <h3 class="sub">6.4 Pozycjonowanie cenowe (990 NOK)</h3>
+  <p>Krajowy zakres ansiktsmassasje: <strong>190–1 780 NOK</strong>; 990 NOK = górna-środkowa półka. <strong>Werdykt:</strong> dobrze ustawione — premium względem masażu i podstawowej kosmetyki, poniżej top-półki sieciowej. Miejsce na podwyżkę (→ 1 200–1 300 NOK) po 2–3 case studies.</p>
+
+  <h3 class="sub">6.5 Mapa pozycjonowania, scoring i Share of Voice</h3>
+  <p>Oś X: cena · oś Y: specjalizacja Kobido. Prawy-górny kwadrant (wysoka specjalizacja + premium) <strong>lokalnie pusty — to miejsce Blissco</strong>.</p>
+  <div class="ascii-map"><pre>  WYSOKA          │  Néroli, Frøken Dings (Stavanger/Bergen)
+  specjalizacja   │
+  (ekspert Kobido)│        ◄── ★ BLISSCO (luka lokalna)
+                  │
+  ─────────────── ┼ ─────────────────────────────────
+                  │  Josefine, Haugesund Hudpleieklinikk
+  Hi Glow (szer.) │  Klinikk Haugesund (twarz, nie Kobido)
+                  │  Atlas Helse (masaż ogólny)
+  NISKA           │  Masaże tajskie
+  specjalizacja   │
+                  └ niska cena ──────────────► premium</pre></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Kryterium</th><th>Blissco</th><th>Hi Glow / Frakkagjerd</th><th>Atlas</th><th>Klinika</th><th>Specj. Kobido</th></tr></thead>
+    <tbody>
+      <tr><td>Specjalizacja Kobido</td><td>●●●●●</td><td>●○○○○</td><td>○○○○○</td><td>●○○○○</td><td>●●●●●</td></tr>
+      <tr><td>Aktywność SoMe / Reels</td><td>●●●○○</td><td>●●○○○</td><td>●●○○○</td><td>●○○○○</td><td>●●●●○</td></tr>
+      <tr><td>Spójność wizualna</td><td>●●●●○</td><td>●●○○○</td><td>●●○○○</td><td>●●○○○</td><td>●●●●○</td></tr>
+      <tr><td>Opinie / social proof</td><td>●●●●● (5,0/41)</td><td>●●○○○ (5,0/2)</td><td>●●●●● (4,8/56)</td><td>●●●○○</td><td>●●●○○</td></tr>
+      <tr><td>Widoczność lokalna</td><td>●●●○○</td><td>●●●○○</td><td>●●●●○</td><td>●●●○○</td><td>○○○○○</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><strong>Share of Voice:</strong> w niszy „Kobido / japansk ansiktsmassasje Haugesund" Blissco ma <strong>praktycznie 100% SOV</strong>. W szerszej kategorii „beauty Haugesund" — niski. <strong>Wniosek:</strong> wygrywać w wąskiej, własnej niszy i stamtąd rozszerzać.</div>
+
+  <h3 class="sub">6.6 Pięć sił Portera (struktura sektora)</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Siła</th><th>Poziom</th><th>Co wzmacnia</th><th>Co osłabia (przewaga Blissco)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Rywalizacja</strong></td><td>niska/śr.</td><td>wolny wzrost lokalny, brak różnicowania → walka ceną</td><td>specjalizacja Kobido, brak 2. gabinetu</td></tr>
+      <tr><td><strong>Groźba wejść</strong></td><td><span class="pill do">śr./wysoka</span></td><td>niski kapitał, brak barier — <strong>lokalne gabinety mogą dodać Kobido (Hi Glow już go ma)</strong></td><td>wymagana wiedza Kobido, lojalność</td></tr>
+      <tr><td><strong>Substytuty</strong></td><td><span class="pill do">wysoka</span></td><td>gua sha / face yoga DIY, botoks, kremy</td><td>trend „clean beauty / filler fatigue"</td></tr>
+      <tr><td><strong>Siła nabywców</strong></td><td>śr./wysoka</td><td>mała baza lokalna, porównywanie cen</td><td>unikalna propozycja, rozproszenie klientek</td></tr>
+      <tr><td><strong>Siła dostawców</strong></td><td>niska</td><td>drogie certyfikacje Kobido</td><td>olejki łatwo wymienne, mała skala</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn"><strong>Wniosek strukturalny:</strong> dwa realne ryzyka to <strong>substytuty</strong> i <strong>groźba wejścia (lokalne kliniki, np. Hi Glow)</strong>. Odpowiedź = mocne różnicowanie (specjalizacja + marka + edukacja) i lojalność, by konkurencja cenowa stała się nieistotna.</div>
+
+  <h3 class="sub">6.7 Portfel konkurencji (BCG-lite) i model kosztowy</h3>
+  <p><strong>Czy konkurent będzie bronił niszy Kobido?</strong> Dla Hi Glow / klinik Kobido to <strong>„znak zapytania"</strong> — niszowy dodatek; „dojne krowy" to laser, Dermapen, depilacja. → <strong>mała motywacja, by agresywnie bronić Kobido</strong>. Dla Blissco Kobido to <strong>„gwiazda / core"</strong>. Asymetria zaangażowania działa na naszą korzyść.</p>
+  <p><strong>Model kosztowy:</strong> klinika = wysokie koszty stałe (maszyny, lokal, personel) → presja na wolumen i upsell. Blissco = niskie koszty (rzemiosło, 1 osoba) → <strong>wyższa marża, większa zwinność, niższe ryzyko</strong>.</p>
+</section>
+
+<!-- 7 -->
+<section class="block" id="r7">
+  <span class="sec-eyebrow">07 — Pozycja Blissco</span>
+  <h2 class="sec">Pozycja Blissco na tle rynku (dane IG)</h2>
+  <ul>
+    <li><strong>356 obserwujących</strong> — realistycznie w paśmie lokalnego gabinetu Kobido (benchmark 0,5–4 tys.).</li>
+    <li><strong>Demografia idealnie dopasowana:</strong> kobiety 83%, wiek 25–44 (55%), Haugesund 30,9%.</li>
+    <li><strong>Rolka Kobido po norwesku</strong> dała <strong>44 nowych obserwatorów</strong> — dowód, że nisza + język + format działają.</li>
+    <li><strong>Słabość:</strong> rolki to tylko 8% treści (a 22% interakcji); zasięg spada przy nieregularności. Naprawia to strategia 3M.</li>
+  </ul>
+</section>
+
+<!-- 8 -->
+<section class="block" id="r8">
+  <span class="sec-eyebrow">08 — Trendy Reels</span>
+  <h2 class="sec">Trendy contentowe SoMe 2025–2026</h2>
+  <ul>
+    <li><strong>Reels = silnik zasięgu.</strong> Wyświetlenia w beauty +26% r/r; udział widzów spoza obserwujących wzrósł z 30% do <strong>49%</strong> — niemal połowa zasięgu od nowych, bez budżetu.</li>
+    <li><strong>Sygnały algorytmu:</strong> watch time, likes/reach, a dla dystrybucji najsilniejszy — <strong>udostępnienia w DM</strong>. → twórz rolki „do wysłania koleżance".</li>
+    <li><strong>Długość:</strong> „sweet spot" zasięgu 7–15 s; rolki &lt;90 s częściej trafiają do nowych.</li>
+    <li><strong>Formaty:</strong> ASMR/satisfying, przed/po (jako karuzela), edukacja „czy wiesz, że", behind-the-scenes.</li>
+  </ul>
+</section>
+
+<!-- 9 -->
+<section class="block" id="r9">
+  <span class="sec-eyebrow">09 — Benchmark</span>
+  <h2 class="sec">Benchmark kont IG do naśladowania</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Konto</th><th>Profil</th><th>Followers</th><th>Lekcja</th></tr></thead>
+    <tbody>
+      <tr><td>@skinsculpting_facialist</td><td>Facialist + edukacja</td><td>~11 tys.</td><td>edukacja + autorytet przebija sufit lokalny</td></tr>
+      <tr><td>@kobido_east_london</td><td>Gabinet Kobido, Londyn</td><td>~3,8 tys.</td><td>konsekwencja + wolumen = pozycja lidera</td></tr>
+      <tr><td>@beausoin.paris</td><td>Luxury Kobido, Paryż</td><td>~2,4 tys.</td><td>„drogi" wizualnie feed = premium</td></tr>
+      <tr><td>@kobido_amsterdam</td><td>Gabinet Kobido</td><td><strong>2 211</strong></td><td>jednoosobowy gabinet w jednym mieście</td></tr>
+      <tr><td><strong>@naturalfaceliftoslo</strong></td><td>Kobido + Face Yoga, Oslo</td><td>b.d.</td><td><strong>najbliższy wzorzec — rynek NO</strong></td></tr>
+      <tr><td>@kobido_expert</td><td>Manualny lifting</td><td>~0,8 tys.</td><td>SEO w nazwie konta</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Lokalne gabinety Kobido żyją na 0,5–4 tys. followersów — realny pułap dla Blissco. Konta edukacyjne przebijają sufit, bo nie są ograniczone do jednego miasta.</p>
+  <div class="callout"><strong>Lista wyżej = benchmark międzynarodowy</strong> (orientacyjny). Zweryfikowane, aktualne konta IG — konkurenci i wzorce z realnymi danymi (naturalfaceliftcare 2 590, esti.gdansk 1 109, forest_massasjeterapi 235, albatrosspa 1 612, anehedman 2 190, Hi Glow 263) — są w <strong>audycie IG (sek. 14)</strong>, który jest źródłem prawdy dla kont IG.</div>
+</section>
+
+<!-- 10 -->
+<section class="block" id="r10">
+  <span class="sec-eyebrow">10 — Konwersja</span>
+  <h2 class="sec">Co konwertuje + najczęstsze błędy</h2>
+  <div class="cols2">
+    <div class="col-card good">
+      <h4>Co konwertuje obserwujących → rezerwacje</h4>
+      <ul>
+        <li>Jasne CTA w bio, na końcu posta, w Stories</li>
+        <li>Link w bio wprost do rezerwacji (mniej kroków)</li>
+        <li>Stories „ostatnie wolne terminy" = pilność</li>
+        <li>Mix treści 40/30/20/10 (edukacja/kulisy/proof/promo)</li>
+        <li>Geotag Haugesund = ~79% więcej zaangażowania</li>
+      </ul>
+    </div>
+    <div class="col-card bad">
+      <h4>Najczęstsze błędy (do uniknięcia)</h4>
+      <ul>
+        <li>Brak CTA · nieregularność</li>
+        <li>Zbyt sprzedażowy ton · słabe wizualia</li>
+        <li>Brak odpowiedzi na DM/komentarze</li>
+        <li>Język medyczny zamiast kosmetycznego („leczy" → ban)</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Przed/po i ASMR bezpiecznie: język kosmetyczny (lifting/ujędrnienie/relaks, nie „leczy/usuwa"), czyste okładki, zgoda klientki.</p>
+</section>
+
+<!-- 11 -->
+<section class="block" id="r11">
+  <span class="sec-eyebrow">11 — Strategia</span>
+  <h2 class="sec">Wnioski strategiczne</h2>
+  <div class="cols2">
+    <div class="col-card good">
+      <h4>Największe szanse</h4>
+      <ul>
+        <li>Pusta kategoria lokalna — pierwszy dedykowany gabinet Kobido</li>
+        <li>Luka contentowa — nikt nie robi edukacji Kobido</li>
+        <li>Trend (odwrót od botoksu) + rosnący rynek + demografia dopasowana</li>
+        <li>Cena bezpieczna z przestrzenią na podwyżkę</li>
+      </ul>
+    </div>
+    <div class="col-card bad">
+      <h4>Największe zagrożenia</h4>
+      <ul>
+        <li><strong>Hi Glow / Frakkagjerd</strong> — jedyny lokalny z Kobido w cenniku (650–990 NOK, 5,0/2). Traktuje go marginalnie, ale mógłby docisnąć. Konkurent #1</li>
+        <li>Atlas Helse — 4,8/5 (56 opinii). <em>Blissco ma 5,0/41 — przewaga w social proof zneutralizowana</em></li>
+        <li>Specjaliści Stavanger/Bergen — lepszy content</li>
+        <li>Uzależnienie od reklamy zamiast organiku</li>
+      </ul>
+    </div>
+  </div>
+  <h3 class="sub">Rekomendacje (priorytety)</h3>
+  <ol>
+    <li><strong>Zająć kategorię „Kobido Haugesund" teraz</strong> — regularne rolki + SEO (nazwa konta, GBP, geotagi).</li>
+    <li><strong>Content dwutorowy</strong> — hasła-edukatory + marka „Kobido".</li>
+    <li><strong>Rolki ASMR + przed/po</strong> (karuzele), 7–15 s, „do wysłania koleżance", język kosmetyczny.</li>
+    <li><strong>Pakiet 6 sesji</strong> jako produkt-bohater (wyższy LTV).</li>
+    <li><strong>Wykorzystać mocny GBP (5,0/41)</strong> — eksponować opinie w treści; utrzymać dopływ nowych (na poziomie Atlas).</li>
+    <li><strong>Monitorować lokalnych graczy (zwł. Hi Glow)</strong> — gdyby docisnęli Kobido, przyspieszyć.</li>
+    <li><strong>Zbudować „fosę"</strong> — pakiet lojalnościowy, marka-rytuał, <strong>asystent AI + Notion (system nie do podrobienia)</strong>, case studies. Fosą jest to, czego nie da się szybko skopiować.</li>
+    <li><strong>Customer journey — przeskoczyć konkurencję</strong> — szybki DM, rezerwacja w 1 kliknięciu, edukacja po zabiegu.</li>
+  </ol>
+  <h3 class="sub">Priorytetyzacja (Impact / Effort)</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th></th><th>Niski wysiłek</th><th>Wysoki wysiłek</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Wysoki wpływ</strong></td><td><strong>QUICK WINS:</strong> eksponować opinie GBP (5,0/41), SEO nazwy + bio, geotagi, link do rezerwacji w 1 klik</td><td><strong>BIG BETS:</strong> regularne rolki Kobido (dzień nagraniowy + batching), system Notion + asystent AI</td></tr>
+      <tr><td><strong>Niski wpływ</strong></td><td>FILL-INS: poprawki feedu, Highlights</td><td>UNIKAĆ: reklama płatna, nowe platformy (TikTok)</td></tr>
+    </tbody>
+  </table></div>
+  <h3 class="sub">Roadmapa 30 / 60 / 90 dni</h3>
+  <ul>
+    <li><strong>1–30 (fundament + quick wins):</strong> bio + Name z Kobido/Haugesund, 5 Highlights, opinie GBP (5,0/41) wyeksponowane w treści, dzień nagraniowy (8 rolek), rytm 2 rolki/tydz.</li>
+    <li><strong>31–60 (zasięg + dowód):</strong> seria przed/po i ASMR, 1 rolka „przebijająca", CTA, oferta letnia, UGC, 3+ opinie.</li>
+    <li><strong>61–90 (konwersja):</strong> pakiet 6 sesji jako bohater, domknięcie ścieżki rezerwacji, 5+ opinii, podsumowanie kwartału = case study, przygotowanie podwyżki.</li>
+  </ul>
+</section>
+
+<!-- 11a -->
+<section class="block" id="r11a">
+  <span class="sec-eyebrow">11a — Pozycjonowanie</span>
+  <h2 class="sec">Blue Ocean — ERRC + Strategy Canvas</h2>
+  <div class="callout"><strong>Uwaga terminologiczna:</strong> ściśle to <strong>nie „błękitny ocean"</strong> (Kobido i popyt już istnieją) — to <strong>broniona nisza / „blue sea"</strong>: lokalny wycinek, którego „rekiny" nie zajęły. Rama ERRC i tak pomaga ostro się różnicować — między inwazyjną medycyną estetyczną (kliniki) a ogólnym relaksem (masaż tajski).</div>
+  <h3 class="sub">Siatka ERRC</h3>
+  <div class="tbl-wrap"><table class="errc">
+    <tbody>
+      <tr><td>Wyeliminuj</td><td>igły / inwazyjność i ból; „szpitalny" chłodny wystrój; masaże całego ciała (fokus na twarzy)</td></tr>
+      <tr><td>Zredukuj</td><td>zależność od drogich maszyn (laser/HIFU); downtime do zera; silna chemia → naturalne olejki</td></tr>
+      <tr><td>Podnieś</td><td>precyzję manualną (rzemiosło &gt; automat); efekt naturalnego liftingu bez „maski"; edukację o mięśniach twarzy</td></tr>
+      <tr><td>Wykreuj</td><td>rytuał Kobido (japońska tradycja); kategorię „naturalna alternatywa dla skalpela"; <strong>asystent AI + Notion u klientki</strong></td></tr>
+    </tbody>
+  </table></div>
+  <h3 class="sub">Strategy Canvas (krzywa wartości)</h3>
+  <ul>
+    <li><strong>Kliniki hudpleie (czerwony ocean):</strong> wysoka cena + technologia, niski relaks i naturalność.</li>
+    <li><strong>Masaż tajski:</strong> niska cena + wysoki relaks, znikomy efekt liftingujący twarzy.</li>
+    <li><strong>Blissco (krzywa rozbieżna):</strong> drastycznie w dół na „inwazyjność" i „maszyny"; gwałtownie w górę na „naturalny efekt", „precyzja manualna", „rytuał/atmosfera", „edukacja".</li>
+  </ul>
+  <p>→ Blissco <strong>nie walczy ceną z masażem tajskim ani technologią z klinikami</strong> — gra własną kategorią „spektakularne odmłodzenie bez igieł, w relaksującej atmosferze".</p>
+  <h3 class="sub">Trzy poziomy „nie-klientów" (rdzeń Blue Ocean)</h3>
+  <p>Prawdziwa siła: nie podbierać klientek klinikom, lecz <strong>tworzyć nowy popyt</strong> wśród osób, które dziś NIE korzystają z zabiegów na twarz:</p>
+  <ol>
+    <li><strong>„Na progu" — boją się igieł/inwazji.</strong> → przekaz „naturalny lifting bez igły".</li>
+    <li><strong>„Odmawiający" — myślą, że masaż twarzy to „głaskanie".</strong> → edukacja: praca na mięśniach, drenaż, dowody przed/po.</li>
+    <li><strong>„Nieodkryci" — mężczyźni i osoby spoza grupy docelowej.</strong> → przekaz: napięcie, ból głowy, regeneracja (nie „uroda").</li>
+  </ol>
+  <div class="callout"><strong>Korzyść:</strong> edukacyjny content realnie <strong>kreuje popyt</strong>, a nie tylko przechwytuje istniejący — to uzasadnia, dlaczego edukacja jest filarem strategii.</div>
+</section>
+
+<!-- 12 -->
+<section class="block" id="r12">
+  <span class="sec-eyebrow">12 — Rzetelność</span>
+  <h2 class="sec">Do weryfikacji (dane niepewne)</h2>
+  <p class="note">Uczciwe oznaczenie — do potwierdzenia na żywo przed użyciem w komunikacji.</p>
+  <ul>
+    <li>Ceny Kobido w salonach Stavanger/Bergen (regionalne).</li>
+    <li><strong>Liczby obserwujących</strong> IG konkurentów i kont-benchmarków.</li>
+    <li>Oceny Google pozostałych gabinetów (potwierdzone: Atlas 4,8/56, Hi Glow 5,0/2).</li>
+    <li>Sezonowość popytu w NO (hipoteza, nie dane).</li>
+    <li>Wolumeny wyszukiwań Google (do uzupełnienia).</li>
+  </ul>
+  <div class="callout"><span class="pill ok">potwierdzone 2026-06-11</span> <strong>Hi Glow / Frakkagjerd Klinikken</strong> realnie oferuje Kobido za <strong>650–990 NOK</strong> (frakkagjerdklinikken.no) — lokalny gracz z Kobido w cenniku, ale jako 1 z kilkudziesięciu usług, bez specjalizacji/marki wokół Kobido.</div>
+</section>
+
+<!-- 13 -->
+<section class="block" id="r13">
+  <span class="sec-eyebrow">13 — Źródła</span>
+  <h2 class="sec">Najważniejsze źródła</h2>
+  <ul>
+    <li>Global Wellness Institute, Grand View Research, Market.us (rynek wellness/spa/masaż twarzy).</li>
+    <li>Statista, Euromonitor, NRK, DinSide, Aftenposten (rynek NO).</li>
+    <li>Helse & Spa, spabreaks.com, Maison Magnifisens (Kobido).</li>
+    <li>La Belle Vie, Sofwave, WhoWhatWear, Evie (trend anti-aging).</li>
+    <li>Dash Social 2026, Buffer, Vidico (trendy IG/Reels).</li>
+    <li>HelseSmart, neroli.no, frokendings.no, frakkagjerdklinikken.no (konkurencja/ceny).</li>
+    <li>Dane własne: Instagram Blissco (luty–maj 2026).</li>
+  </ul>
+  <p class="note">Pełne linki — w wersji źródłowej (Markdown) raportu.</p>
+</section>
+
+</main>
+
+<footer class="footer">
+  <img class="logo" src="assets/blissco-logo-biale.png" alt="blissco">
+  <div class="quote">Ro, glød og kvalitet.</div>
+  <p class="meta">Raport badawczy — nisza Kobido, konkurencja, trendy · Blissco Massasje og Terapi<br>
+  04.06.2026 (akt. 11.06.2026) · przygotował GMERK (Kacper) · Etap 1 — Fundament</p>
+</footer>
+
+</body>
+</html>

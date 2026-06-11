@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Blissco — Audyt Instagrama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --espresso:#4A2E2A; --espresso-deep:#3B231F; --krem:#FCF7F2;
+  --zloto:#BE9220; --zloto-jasne:#CC9D22; --zloto-ciemne:#A57E1B;
+  --mocha:#8B6F5C; --bez:#E8DCCE; --grafit:#1A1A1A;
+  --surface-card:#FFFFFF;
+  --line:rgba(74,46,42,.10); --line-strong:rgba(74,46,42,.22); --line-inverse:rgba(252,247,242,.16);
+  --fg1:var(--espresso); --fg2:rgba(74,46,42,.82); --fg3:rgba(74,46,42,.62);
+  --fg-on-dark:var(--krem); --fg-on-dark-2:rgba(252,247,242,.72); --fg-on-dark-3:rgba(252,247,242,.45);
+  --danger:#B6534A; --success:#7C7A3E;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Jost',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --track-eyebrow:.42em; --track-caption:.28em; --track-display:.22em;
+  --r-sm:4px; --r-md:6px; --r-lg:10px; --r-pill:999px;
+  --shadow-sm:0 4px 16px rgba(74,46,42,.08);
+  --shadow-md:0 8px 30px rgba(74,46,42,.12);
+  --shadow-lg:0 16px 50px rgba(74,46,42,.16);
+  --shadow-gold:0 8px 30px rgba(190,146,32,.22);
+  --ease:cubic-bezier(.22,.61,.36,1); --dur:.28s;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:300;line-height:1.7;color:var(--fg1);background:var(--krem);-webkit-font-smoothing:antialiased}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;background:var(--espresso);color:var(--fg-on-dark);overflow:hidden;padding:96px 24px 80px;text-align:center}
+.hero::after{content:"";position:absolute;top:-30%;right:-10%;width:60%;height:120%;
+  background:radial-gradient(circle,rgba(190,146,32,.16),transparent 60%);pointer-events:none}
+.hero-inner{position:relative;max-width:760px;margin:0 auto;z-index:1}
+.hero img.logo{height:38px;margin-bottom:40px;opacity:.95}
+.eyebrow{font-family:var(--sans);font-weight:500;font-size:.72rem;letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--zloto)}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:4rem;line-height:1.04;letter-spacing:.01em;margin:22px 0 18px}
+.hero .sub{font-family:var(--sans);font-weight:300;font-size:1.05rem;color:var(--fg-on-dark-2);max-width:520px;margin:0 auto}
+.hero .meta{margin-top:30px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-on-dark-3)}
+.score{display:inline-flex;align-items:baseline;gap:10px;margin-top:34px;padding:14px 28px;border:1px solid var(--line-inverse);border-radius:var(--r-pill)}
+.score b{font-family:var(--serif);font-size:2rem;font-weight:400;color:var(--zloto)}
+.score span{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--fg-on-dark-2)}
+
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+section.block{padding:64px 0;border-bottom:1px solid var(--line)}
+section.block:last-of-type{border-bottom:none}
+.sec-eyebrow{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--zloto);display:block;margin-bottom:12px}
+h2.sec{font-family:var(--serif);font-weight:400;font-size:2.3rem;line-height:1.12;margin-bottom:96px}
+h3.sub{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:64px 0 14px}
+p{font-size:1rem;color:var(--fg2);margin-bottom:14px}
+strong{font-weight:500;color:var(--espresso)}
+em{font-style:italic;font-family:var(--serif);font-size:1.08em;color:var(--mocha)}
+a{color:var(--zloto-ciemne);text-decoration:none;border-bottom:1px solid rgba(165,126,27,.35)}
+a:hover{color:var(--zloto)}
+ul,ol{margin:0 0 16px 0;padding-left:0;list-style:none}
+ul li,ol li{position:relative;padding-left:26px;margin-bottom:9px;font-size:1rem;color:var(--fg2)}
+ul li::before{content:"·";position:absolute;left:8px;top:-2px;color:var(--zloto);font-size:1.4em;font-weight:600}
+ol{counter-reset:li}
+ol li::before{counter-increment:li;content:counter(li);position:absolute;left:0;top:2px;
+  font-family:var(--serif);font-size:.9rem;color:var(--zloto);font-weight:600;
+  width:18px;height:18px;line-height:18px;text-align:center}
+
+/* ---------- TOC ---------- */
+.toc{background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);padding:30px 34px;margin:-48px auto 0;max-width:880px;position:relative;z-index:2}
+.toc h4{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--mocha);margin-bottom:16px}
+.toc ol{columns:2;column-gap:40px}
+.toc li{padding-left:24px;margin-bottom:8px;font-size:.92rem;break-inside:avoid}
+.toc li::before{top:3px}
+.toc a{color:var(--fg2);border:none}
+.toc a:hover{color:var(--zloto-ciemne)}
+
+/* ---------- CARDS / CALLOUTS ---------- */
+.card{background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);padding:26px 30px;margin:20px 0}
+.callout{background:var(--bez);border-left:3px solid var(--zloto);border-radius:var(--r-sm);
+  padding:18px 24px;margin:20px 0;font-size:.97rem;color:var(--fg2)}
+.callout.warn{background:rgba(182,83,74,.07);border-left-color:var(--danger)}
+.callout.warn strong{color:var(--danger)}
+.note{font-size:.9rem;color:var(--fg3);font-style:italic}
+.note-bar{background:var(--espresso);color:var(--fg-on-dark);border-radius:var(--r-lg);padding:14px 22px;font-size:.86rem;color:var(--fg-on-dark-2);margin:14px 0}
+
+/* three TL;DR points */
+.points{display:grid;gap:16px;margin:26px 0}
+.point{background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);padding:24px 26px;display:flex;gap:20px;align-items:flex-start}
+.point .n{font-family:var(--serif);font-size:2.1rem;font-weight:400;color:var(--zloto);line-height:1;min-width:32px}
+.point p{margin:0;font-size:.98rem}
+
+/* dark feature card (baseline) */
+.dark-card{background:var(--espresso);color:var(--fg-on-dark);border-radius:var(--r-lg);padding:32px 34px;margin:24px 0;box-shadow:var(--shadow-md)}
+.dark-card h3{color:var(--krem)}
+.dark-card p{color:var(--fg-on-dark-2)}
+.dark-card .note{color:var(--fg-on-dark-3)}
+
+/* ---------- TABLES ---------- */
+.tbl-wrap{overflow-x:auto;margin:22px 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:var(--surface-card);
+  border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+thead th{background:var(--bez);color:var(--espresso);font-family:var(--sans);font-weight:500;
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;text-align:left;padding:13px 16px}
+tbody td{padding:13px 16px;border-top:1px solid var(--line);color:var(--fg2);vertical-align:top}
+tbody tr:hover{background:rgba(232,220,206,.25)}
+table strong{color:var(--espresso)}
+
+/* ---------- PILLS ---------- */
+.pill{display:inline-block;font-family:var(--sans);font-weight:500;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;padding:3px 11px;border-radius:var(--r-pill);white-space:nowrap}
+.pill.ok{background:rgba(124,122,62,.14);color:var(--success)}
+.pill.do{background:rgba(182,83,74,.12);color:var(--danger)}
+.pill.gold{background:rgba(190,146,32,.14);color:var(--zloto-ciemne)}
+
+/* two-column strengths */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+.col-card{border-radius:var(--r-lg);padding:22px 24px}
+.col-card.good{background:rgba(124,122,62,.07);border:1px solid rgba(124,122,62,.2)}
+.col-card.bad{background:rgba(182,83,74,.06);border:1px solid rgba(182,83,74,.18)}
+.col-card h4{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px}
+.col-card.good h4{color:var(--success)}
+.col-card.bad h4{color:var(--danger)}
+.col-card li{font-size:.92rem;padding-left:20px}
+.col-card li::before{font-size:1.1em;left:6px}
+
+/* checklist */
+.check li{padding-left:30px}
+.check li::before{content:"";position:absolute;left:0;top:5px;width:14px;height:14px;
+  border:1.5px solid var(--mocha);border-radius:3px;background:transparent;font-size:0}
+
+/* caption templates */
+.tpl{background:var(--krem);border:1px solid var(--line);border-left:3px solid var(--mocha);
+  border-radius:var(--r-sm);padding:20px 24px;margin:16px 0}
+.tpl .tpl-label{font-family:var(--sans);font-weight:500;font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mocha);display:block;margin-bottom:12px}
+.tpl p{font-size:.94rem;margin-bottom:8px}
+.tpl .tags{font-family:var(--sans);font-size:.82rem;color:var(--zloto-ciemne);letter-spacing:.02em}
+.reel-block{margin:18px 0}
+.reel-block .rb-title{font-family:var(--sans);font-weight:500;color:var(--espresso);font-size:.96rem;margin-bottom:8px}
+
+/* ---------- FOOTER ---------- */
+.footer{background:var(--espresso);color:var(--fg-on-dark);text-align:center;padding:70px 24px 60px;margin-top:0}
+.footer img.logo{height:32px;margin-bottom:26px;opacity:.92}
+.footer .quote{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--zloto);margin-bottom:24px}
+.footer .meta{font-size:.76rem;letter-spacing:.1em;color:var(--fg-on-dark-3);max-width:620px;margin:0 auto;line-height:1.8}
+
+@media(max-width:680px){
+  .hero{padding:64px 20px 56px}
+  .hero h1{font-size:2.7rem}
+  h2.sec{font-size:1.8rem}
+  .toc ol{columns:1}
+  .cols2{grid-template-columns:1fr}
+  .point{flex-direction:row}
+}
+.topnav{position:sticky;top:0;z-index:50;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;background:var(--krem);border-bottom:1px solid var(--line);padding:11px 14px}
+.topnav a{font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);text-decoration:none;border:none;padding:6px 14px;border-radius:999px;transition:background .2s,color .2s}
+.topnav a:hover{color:var(--espresso);background:rgba(232,220,206,.5)}
+.topnav a.active{color:var(--espresso);background:var(--bez)}
+</style>
+</head>
+<body>
+<nav class="topnav">
+<a href="DASHBOARD_BLISSCO.html">Dashboard</a>
+<a href="AUDYT_INSTAGRAM.html" class="active">Audyt IG</a>
+<a href="RAPORT_BADAWCZY.html">Raport badawczy</a>
+<a href="STRATEGIA_3M.html">Strategia 3M</a>
+</nav>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero">
+  <div class="hero-inner">
+    <img class="logo" src="assets/blissco-logo-zlote.png" alt="blissco">
+    <div class="eyebrow">Audyt Instagrama · Etap 1 — Fundament</div>
+    <h1>Audyt Instagrama</h1>
+    <p class="sub">Stan profilu, analiza danych i rekomendacje rozwoju dla @blissco.therapy — masaż Kobido, Haugesund.</p>
+    <div class="score"><b>6 / 10</b><span>Ocena startowa</span></div>
+    <div class="meta">Blissco Massasje og Terapi · 11.06.2026 · przygotował GMERK</div>
+  </div>
+</header>
+
+<!-- ======================= TOC ======================= -->
+<nav class="toc">
+  <h4>Spis treści</h4>
+  <ol>
+    <li><a href="#s1">Ocena ogólna</a></li>
+    <li><a href="#s2">Stan profilu</a></li>
+    <li><a href="#s3">Analiza statystyk</a></li>
+    <li><a href="#s4">Audyt treści</a></li>
+    <li><a href="#s5">Audyt wizualny feedu</a></li>
+    <li><a href="#s6">Hashtagi i Instagram SEO</a></li>
+    <li><a href="#s7">Najlepsze godziny</a></li>
+    <li><a href="#s8">Mocne i słabe strony</a></li>
+    <li><a href="#s9">Rekomendacje</a></li>
+    <li><a href="#s10">Baseline (punkt zero)</a></li>
+    <li><a href="#s11">Cele SMART na 3 miesiące</a></li>
+    <li><a href="#s12">Standard captionów</a></li>
+    <li><a href="#s12a">Algorytm 2026</a></li>
+    <li><a href="#s13">Checklista produkcji rolek</a></li>
+    <li><a href="#s14">Macierz konkurencji</a></li>
+  </ol>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section class="block" id="s1">
+  <span class="sec-eyebrow">01 — Podsumowanie</span>
+  <h2 class="sec">Ocena ogólna</h2>
+  <p>Profil ma <strong>bardzo dobry fundament</strong>, którego większość gabinetów w okolicy nie ma: właściwa grupa odbiorców trafiła sama (kobiety 25–44 z Haugesund), a treści Kobido po norwesku potrafią konwertować ponadprzeciętnie. Problemem nie jest <em>jakość</em>, tylko <strong>regularność i struktura</strong> — profil żyje głównie Stories, rolek jest za mało, a publikacje są nieregularne. To dobra wiadomość: największe rezerwy leżą tam, gdzie najłatwiej je odblokować.</p>
+  <div class="points">
+    <div class="point"><span class="n">1</span><p><strong>Regularność wprost napędza zasięg.</strong> Dowód w danych: luty (0 publikacji) → marzec (3 rolki) = <strong>+422% wyświetleń</strong>. Spadek od kwietnia to efekt mniejszej liczby materiałów, nie „wypalenia" konta.</p></div>
+    <div class="point"><span class="n">2</span><p><strong>Rolki to najefektywniejszy format, a są niedoinwestowane.</strong> Stanowią tylko <strong>8% treści</strong>, ale generują <strong>22% wszystkich interakcji</strong> i przynoszą najwięcej nowych obserwujących (jedna rolka Kobido = <strong>44 nowych obserwatorów</strong>).</p></div>
+    <div class="point"><span class="n">3</span><p><strong>Maj był sztucznie podbity reklamą</strong> (32,9% zasięgu płatne) — organiczny punkt wyjścia jest niższy, niż wygląda. To nasz <strong>baseline</strong> do pokazania wzrostu.</p></div>
+  </div>
+  <div class="callout"><strong>Ocena startowa: 6/10</strong> — solidna baza, niewykorzystany potencjał. Cel po 3 miesiącach: stabilny, rosnący organik bez reklamy.</div>
+  <p class="note">Status dostępu: brak jeszcze dostępu do konta (IG spięty z prywatnym FB — czeka na firmową stronę FB + zaproszenie przez Meta Business Suite). Audyt na bazie przekazanych danych; pozycje wymagające panelu oznaczono jako „do weryfikacji".</p>
+</section>
+
+<!-- 2 -->
+<section class="block" id="s2">
+  <span class="sec-eyebrow">02 — Profil</span>
+  <h2 class="sec">Stan profilu (snapshot)</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Element</th><th>Stan</th><th>Komentarz</th></tr></thead>
+    <tbody>
+      <tr><td>Nazwa / handle</td><td>@blissco.therapy</td><td>OK, spójna z marką</td></tr>
+      <tr><td>Obserwujący (koniec maja)</td><td><strong>356</strong></td><td>Realna, lokalna baza — jakość ważniejsza niż liczba</td></tr>
+      <tr><td>Typ konta</td><td>Firmowe</td><td>Statystyki dostępne — OK</td></tr>
+      <tr><td>Powiązanie z FB</td><td>Prywatne konto</td><td><span class="pill do">Do naprawy</span> firmowa strona FB → IG → Meta Business Suite</td></tr>
+      <tr><td>Bio / highlights</td><td>Robi Justyna sama</td><td>Wzór bio NO w Playbooku</td></tr>
+      <tr><td>Link w bio</td><td><strong>Działa → rezerwacja</strong></td><td>Prowadzi bezpośrednio do rezerwacji — OK</td></tr>
+      <tr><td>Dotknięcia adresu firmy (30 dni)</td><td>6</td><td>Niski ruch z IG do mapy — choć GBP mocny (5,0/41), trzeba lepiej linkować z profilu</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 3 -->
+<section class="block" id="s3">
+  <span class="sec-eyebrow">03 — Dane</span>
+  <h2 class="sec">Analiza statystyk</h2>
+
+  <h3 class="sub">3.1 Trend miesięczny (luty → maj 2026)</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Miesiąc</th><th>Wyświetlenia</th><th>Obserwujący</th><th>Przyrost</th><th>Publikacje</th></tr></thead>
+    <tbody>
+      <tr><td>Luty</td><td>850</td><td>224</td><td>+69</td><td><strong>0 rolek, 0 postów</strong></td></tr>
+      <tr><td>Marzec</td><td><strong>4,4 tys. (+422%)</strong></td><td>283</td><td>+60</td><td>3 rolki, 1 post</td></tr>
+      <tr><td>Kwiecień</td><td>3,3 tys.</td><td>340</td><td>+57</td><td>1 rolka, 2 posty</td></tr>
+      <tr><td>Maj</td><td>1,6 tys.</td><td>356</td><td><strong>+15</strong></td><td>mało (m.in. reklama)</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Wniosek:</strong> krzywa zasięgu kopiuje krzywą publikacji z opóźnieniem. Przyrost obserwujących wyhamował (+69 → +15), bo zabrakło rolek docierających do nowych. Nie ma problemu z kontem — jest problem z <strong>rytmem</strong>.</p>
+
+  <h3 class="sub">3.2 Ostatnie 30 dni (4 maj – 2 cze)</h3>
+  <ul>
+    <li>Wyświetlenia: <strong>6 379</strong>, z czego <strong>32,9% z reklam</strong> → organik ~4 280.</li>
+    <li>Reach: <strong>2 036</strong> (−72,1% vs poprzedni okres).</li>
+    <li>Aktywność w profilu: <strong>367 (−55,2%)</strong>, wizyty w profilu 297 (−54,5%).</li>
+  </ul>
+  <div class="callout warn"><strong>Sygnał:</strong> spadki dwucyfrowe na wszystkich metrykach. To dno cyklu — idealny moment startu, każdy ruch w górę będzie wyraźnie widoczny w case study.</div>
+
+  <h3 class="sub">3.3 Demografia — idealnie trafiona pod Kobido</h3>
+  <ul>
+    <li><strong>Płeć:</strong> kobiety <strong>83,4%</strong> / mężczyźni 16,6%</li>
+    <li><strong>Wiek:</strong> 25–34 → <strong>31,0%</strong>, 35–44 → 24,3% (razem <strong>55%</strong> w rdzeniu grupy)</li>
+    <li><strong>Lokalizacja:</strong> Haugesund <strong>30,9%</strong>, Bergen 9,8%, Stavanger 5,8%, Oslo 4,4%</li>
+  </ul>
+  <p><strong>Wniosek:</strong> komunikacja i język (norweski) trafiają we właściwą grupę. Nie zmieniamy targetu — wzmacniamy to, co działa.</p>
+
+  <h3 class="sub">3.4 Formaty — największa rezerwa</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Typ</th><th>% treści (wyświetlenia)</th><th>% interakcji (90 dni)</th></tr></thead>
+    <tbody>
+      <tr><td>Stories</td><td>65,5%</td><td>68,3%</td></tr>
+      <tr><td>Posty</td><td>26,5%</td><td>9,5%</td></tr>
+      <tr><td><strong>Rolki</strong></td><td><strong>8,0%</strong></td><td><strong>22,2%</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><strong>To najważniejszy slajd audytu:</strong> rolki dają niemal 3× więcej interakcji niż ich udział w treści. Każda dodatkowa rolka Kobido to nieproporcjonalnie duży zwrot. Stories budują relację z obecnymi, ale <strong>nie pozyskują nowych</strong> — do wzrostu potrzebne są rolki.</div>
+
+  <h3 class="sub">3.5 Metryki 2026 — czym mierzyć</h3>
+  <p><strong>Engagement Rate — dwie formuły:</strong></p>
+  <ul>
+    <li><strong>ERF</strong> (wg obserwujących) = (Polubienia + Komentarze + Udostępnienia + Zapisania) / Obserwujący × 100 — porównuje siłę naszej społeczności.</li>
+    <li><strong>ERR</strong> (wg zasięgu) = te same interakcje / Reach × 100 — uczciwsza dla rolek, które docierają do obcych.</li>
+  </ul>
+  <p>Dla konta <strong>&lt;1000 obs. benchmark ERF to 5–8%</strong> (cel: <strong>6%</strong>). Małe, lokalne konto = naturalnie wysoki ER — to przewaga Blissco, nie słabość.</p>
+  <div class="callout"><strong>Uwaga na interpretację:</strong> rolka ma zwykle wysoki ERF, niski ERR (duży zasięg do obcych „rozcieńcza" mianownik). Karuzela ma najwyższy ERF w feedzie 2026 (zapisy). Nie porównywać formatów jedną liczbą — patrzeć na właściwy sygnał: <strong>rolki → udostępnienia, karuzele → zapisy</strong>.</div>
+  <div class="dark-card">
+    <h3 style="font-family:var(--serif);font-weight:500;font-size:1.3rem;margin-bottom:10px">Sends per reach — metryka wzrostu nr 1 w 2026</h3>
+    <p>Ile razy treść wysłano w DM względem zasięgu. Algorytm premiuje udostępnienia <strong style="color:var(--krem)">3–5× mocniej niż polubienia</strong>, bo to aktywne poparcie. Jak podnosić:</p>
+    <ul style="margin-top:10px">
+      <li style="color:var(--fg-on-dark-2)"><strong style="color:var(--krem)">„Złote pytanie" przed publikacją:</strong> czy ktoś wysłałby to znajomej w DM?</li>
+      <li style="color:var(--fg-on-dark-2)">Treści „do wysłania": checklisty, zaskakujące dane, „oznacz kogoś, kto…", szybkie porady.</li>
+      <li style="color:var(--fg-on-dark-2)">Rolki są najczęściej przesyłanym formatem — stąd nacisk na rolki Kobido.</li>
+    </ul>
+  </div>
+  <h3 class="sub" style="font-size:1.15rem">Benchmarki branżowe (nano &lt;1K, beauty/wellness)</h3>
+  <ul>
+    <li>ER konta nano: <strong>5–8%</strong> (cel 6%). Mediana branży wellness: 1,4–1,8% — małe konto ma wyższą poprzeczkę.</li>
+    <li>ER wg formatu <em>(orientacyjnie, różni się między źródłami)</em>: karuzele ~6,9% · statyczne ~4,4% · rolki ~3,3% (rolki = najwyższy zasięg do nowych).</li>
+    <li>Stories reach rate: <strong>3–5%</strong> bazy obserwujących.</li>
+    <li><strong>Bonus za oryginalność:</strong> treść własna (bez znaku wodnego TikToka) = <strong>+40–60% zasięgu</strong>; cudze logo karane −60–80%.</li>
+  </ul>
+  <h3 class="sub" style="font-size:1.15rem">Proporcje „zdrowego" konta (kontrola co miesiąc)</h3>
+  <ul>
+    <li><strong>Save-to-like ratio &gt; 5%</strong> (zwłaszcza karuzele edukacyjne Kobido) — silny sygnał algorytmu.</li>
+    <li><strong>Share-to-reach ratio &gt; 1%</strong> — DM-share 3–5× cenniejszy niż like.</li>
+    <li><strong>Głębokość konwersacji:</strong> ≥20% wątków z odpowiedzią twórcy. Odpowiedź w 60 min = <strong>+21% dystrybucji</strong> posta.</li>
+  </ul>
+</section>
+
+<!-- 4 -->
+<section class="block" id="s4">
+  <span class="sec-eyebrow">04 — Treść</span>
+  <h2 class="sec">Audyt treści — co działa</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Treść</th><th>Wynik</th><th>Wniosek</th></tr></thead>
+    <tbody>
+      <tr><td>Rolka Kobido „Føler du at ansiktet ditt er spent?" (kwiecień)</td><td>1,2 tys. wyśw. → <strong>44 nowych obs.</strong></td><td>Rolka po norwesku z <strong>pytaniem o napięcie twarzy</strong> = najlepsza konwersja</td></tr>
+      <tr><td>Rolka „masaż pleców" (marzec)</td><td>1,7 tys. wyśw. → 11 nowych obs.</td><td>Edukacja o ciele działa</td></tr>
+      <tr><td>Post Kobido „naturlig glød og løft" (10 maj)</td><td><strong>2,2 tys.</strong> wyśw.</td><td>Hasło „naturalny lifting / blask" rezonuje</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Sygnały jakości z rolek (90 dni):</strong> 116 polubień, <strong>21 zapisań</strong>, <strong>28 udostępnień</strong> — wysoki stosunek zapisów/udostępnień = treść uznawana za wartościową (ludzie wracają i polecają).</p>
+  <div class="callout warn"><strong>Słaby punkt:</strong> tylko 9 komentarzy w 90 dni → brak CTA do dyskusji. Łatwa poprawa: kończyć rolki pytaniem.</div>
+  <div class="callout"><strong>Sprawdzony przepis na rolkę:</strong> <em>pytanie o konkretny problem (napięcie twarzy / ból pleców) → po norwesku → edukacja Kobido → CTA „zarezerwuj / napisz".</em></div>
+</section>
+
+<!-- 5 -->
+<section class="block" id="s5">
+  <span class="sec-eyebrow">05 — Estetyka</span>
+  <h2 class="sec">Audyt wizualny feedu</h2>
+  <p class="note">Z analizy realnego gridu (zrzut 2026-06-04, pomijając 6 najstarszych kafelków).</p>
+  <div class="cols2">
+    <div class="col-card good">
+      <h4>Co działa — utrzymać</h4>
+      <ul>
+        <li>Spójna <strong>ciepła paleta</strong> (brązy, krem, ton skóry) na postach Kobido/masażu.</li>
+        <li><strong>Jeden serif display</strong> wraca na kartach i w karuzelach → rozpoznawalność.</li>
+        <li><strong>Logo zawsze na dole, wyśrodkowane</strong> → konsekwencja.</li>
+        <li>„Myter vs. Fakta" = <strong>wzorzec jakości</strong>. Do tego poziomu równamy resztę.</li>
+      </ul>
+    </div>
+    <div class="col-card bad">
+      <h4>Co się rozjeżdża — do naprawy</h4>
+      <ul>
+        <li><strong>Jaskrawy czerwony kafelek</strong> — wybija z palety → przekolorować na brąz/krem/złoto.</li>
+        <li><strong>Różna temperatura zdjęć</strong> → ujednolicić jednym ciepłym presetem.</li>
+        <li><strong>„BLISSENCE"</strong> (kolab) — dodać element Blissco lub trzymać do minimum.</li>
+        <li><strong>6 najstarszych</strong> (liście, ramki roślinne) — nie powielać, zostawić w przeszłości.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><strong>Rekomendacja rytmu gridu:</strong> naprzemiennie <em>ciemna karta → zdjęcie → jasna karta</em>, żeby profil czytał się jak całość, a nie zbiór pojedynczych postów.</div>
+</section>
+
+<!-- 6 -->
+<section class="block" id="s6">
+  <span class="sec-eyebrow">06 — Widoczność</span>
+  <h2 class="sec">Hashtagi i Instagram SEO</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Hashtag</th><th>Skala</th><th>Uwaga</th></tr></thead>
+    <tbody>
+      <tr><td>#kobido</td><td>mała nisza</td><td><strong>duży zasięg / mała konkurencja — priorytet</strong></td></tr>
+      <tr><td>#massagetherapist</td><td>3M postów</td><td>dobry środek</td></tr>
+      <tr><td>#massagetherapy</td><td>22,6M</td><td>szeroki</td></tr>
+      <tr><td>#selfcare</td><td>96,2M</td><td>mega-broad — tylko jako uzupełnienie</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn"><strong>Hashtagi — praktyka 2026:</strong> Instagram ograniczył wagę hashtagów. Najlepsza praktyka to tylko <strong>3–5 precyzyjnych, niszowych tagów</strong> + <strong>Instagram SEO</strong>: słowa kluczowe wplecione naturalnie w bio i opisy („Kobido massasje Haugesund", „ansiktsmassasje", „naturlig ansiktsløft"). Algorytm kategoryzuje treść po tekście i pokazuje ją w wyszukiwarce — to ważniejsze niż chmura tagów.</div>
+  <p><strong>Rekomendacja:</strong> 3–5 tagów w miksie: niszowe (#kobido, #ansiktsmassasje) + lokalne (#haugesund, #rogaland). Geografia w <strong>słowach kluczowych opisu</strong>, nie tylko w tagach — to nasza największa przewaga.</p>
+</section>
+
+<!-- 7 -->
+<section class="block" id="s7">
+  <span class="sec-eyebrow">07 — Harmonogram</span>
+  <h2 class="sec">Najlepsze godziny publikacji</h2>
+  <p>Powtarzalne w 2 miesiącach — okno aktywności obserwujących:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Dzień</th><th>Okno</th></tr></thead>
+    <tbody>
+      <tr><td>Poniedziałek</td><td>18:00–21:00</td></tr>
+      <tr><td>Czwartek</td><td>18:00–21:00</td></tr>
+      <tr><td>Niedziela</td><td>18:00–21:00</td></tr>
+    </tbody>
+  </table></div>
+  <p>Stały harmonogram: rolka w jednym z tych okien, batchowanie z wyprzedzeniem.</p>
+</section>
+
+<!-- 8 -->
+<section class="block" id="s8">
+  <span class="sec-eyebrow">08 — Synteza</span>
+  <h2 class="sec">Mocne i słabe strony</h2>
+  <div class="cols2">
+    <div class="col-card good">
+      <h4>Mocne</h4>
+      <ul>
+        <li>Idealnie trafiona demografia (K 83%, 25–44, Haugesund)</li>
+        <li>Sprawdzony, konwertujący format (rolka Kobido NO)</li>
+        <li>Spójna ciepła estetyka, wzorzec „Myter vs. Fakta"</li>
+        <li>Wysokie zapisania/udostępnienia = wartościowa treść</li>
+        <li>Lojalna, lokalna baza 356 obs.</li>
+        <li><strong>Mocny GBP: 5,0 z 41 opinii</strong> (social proof + SEO lokalny)</li>
+      </ul>
+    </div>
+    <div class="col-card bad">
+      <h4>Słabe / do naprawy</h4>
+      <ul>
+        <li>Nieregularność publikacji (rytm = zasięg)</li>
+        <li>Rolki tylko 8% treści — niedoinwestowane</li>
+        <li>Profil oparty na Stories (nie pozyskują nowych)</li>
+        <li>Mało komentarzy (brak CTA do dyskusji)</li>
+        <li>Reklama maskuje słaby organik; spadki −55/−72%</li>
+        <li>Czerwony kafelek + różna temperatura zdjęć</li>
+        <li>Słaby przepływ IG → mapa/rezerwacja (6 dotknięć adresu)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="block" id="s9">
+  <span class="sec-eyebrow">09 — Plan działania</span>
+  <h2 class="sec">Rekomendacje</h2>
+  <h3 class="sub">Quick wins (od ręki, tydzień 1–2)</h3>
+  <ol>
+    <li><strong>Wróć do rytmu publikacji</strong> — rosnące marki publikują 3,7×/tydz. Cel: <strong>3–4 publikacje feed/tydz (≥2 rolki)</strong> + 1–3 Stories dziennie, w oknach pon/czw/niedz 18–21.</li>
+    <li><strong>Powiel sprawdzony przepis</strong> — rolka Kobido po norwesku zaczynająca się od pytania o problem (napięcie twarzy/ból).</li>
+    <li><strong>Dodaj CTA na końcu każdej rolki</strong> — pytanie do widza (podbije komentarze) + „rezerwuj/napisz".</li>
+    <li><strong>Napraw czerwony kafelek</strong> i nałóż jeden ciepły preset na wszystkie zdjęcia.</li>
+    <li><strong>Dopracuj bio po norwesku</strong> (wzór w playbooku) — link do rezerwacji już działa, zostaw go wyeksponowany.</li>
+    <li><strong>Highlights</strong> uporządkowane: Kobido · Cennik · Opinie · Kontakt.</li>
+  </ol>
+  <h3 class="sub">Strategiczne (miesiąc 1–3)</h3>
+  <ol>
+    <li><strong>Firmowa strona FB + Meta Business Suite</strong> — odblokowuje współpracę i planowanie.</li>
+    <li><strong>Stały rytm gridu</strong> (ciemna/zdjęcie/jasna) + batchowanie treści.</li>
+    <li><strong>Lokalne SEO</strong> — GBP już mocny (<strong>5,0/41</strong>): eksponować opinie w treści/Highlightach i lepiej linkować z IG do mapy/rezerwacji; + tagi lokalne, wzmocnienie adresu.</li>
+    <li><strong>Odejście od reklamy jako protezy</strong> — budujemy organik, reklama tylko punktowo pod ofertę.</li>
+    <li><strong>Zbieranie opinii i UGC</strong> od zadowolonych klientek (dowód społeczny pod premium Kobido).</li>
+    <li><strong>Automatyzacja DM</strong> („skomentuj KOBIDO, a wyślę cennik") — podnosi relationship signal i zasięg. Wpina się w deliverable „asystent AI".</li>
+  </ol>
+</section>
+
+<!-- 10 -->
+<section class="block" id="s10">
+  <span class="sec-eyebrow">10 — Punkt zero</span>
+  <h2 class="sec">Baseline do case study</h2>
+  <div class="dark-card">
+    <h3 style="font-family:var(--serif);font-weight:500;font-size:1.3rem;margin-bottom:16px">Stan przed startem współpracy (czerwiec 2026)</h3>
+    <div class="tbl-wrap" style="margin:0"><table style="background:transparent;border-color:var(--line-inverse)">
+      <tbody style="color:var(--fg-on-dark-2)">
+        <tr style="border:none"><td style="border-color:var(--line-inverse);color:var(--fg-on-dark-2)">Obserwujący</td><td style="border-color:var(--line-inverse);color:var(--krem)"><strong style="color:var(--krem)">356</strong></td></tr>
+        <tr><td style="border-color:var(--line-inverse);color:var(--fg-on-dark-2)">Przyrost / mies. (maj)</td><td style="border-color:var(--line-inverse);color:var(--krem)"><strong style="color:var(--krem)">+15</strong></td></tr>
+        <tr><td style="border-color:var(--line-inverse);color:var(--fg-on-dark-2)">Wyświetlenia / 30 dni</td><td style="border-color:var(--line-inverse);color:var(--krem)">6 379 (32,9% płatne)</td></tr>
+        <tr><td style="border-color:var(--line-inverse);color:var(--fg-on-dark-2)">Reach organiczny / 30 dni</td><td style="border-color:var(--line-inverse);color:var(--krem)">~2 036 (−72,1%)</td></tr>
+        <tr><td style="border-color:var(--line-inverse);color:var(--fg-on-dark-2)">Udział rolek w treści</td><td style="border-color:var(--line-inverse);color:var(--krem)"><strong style="color:var(--krem)">8%</strong></td></tr>
+        <tr><td style="border-color:var(--line-inverse);color:var(--fg-on-dark-2)">Komentarze / 90 dni (rolki)</td><td style="border-color:var(--line-inverse);color:var(--krem)">9</td></tr>
+        <tr><td style="border-color:var(--line-inverse);color:var(--fg-on-dark-2)">Dotknięcia adresu firmy / 30 dni</td><td style="border-color:var(--line-inverse);color:var(--krem)">6</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note" style="margin-top:16px;color:var(--fg-on-dark-3)">Te liczby to nasz „zero". Cel 3M: rosnący przyrost obserwujących bez reklamy, udział rolek ≥ 25%, reach organiczny w trendzie wzrostowym.</p>
+  </div>
+  <div class="callout"><strong>Do zmierzenia po uzyskaniu dostępu (metryki 2026):</strong> ERF per format, sends/reach na rolkę (cel ~15 DM/rolkę), zapisy na karuzelę, kliknięcia w link w bio.</div>
+</section>
+
+<!-- 11 -->
+<section class="block" id="s11">
+  <span class="sec-eyebrow">11 — Cele</span>
+  <h2 class="sec">Cele SMART na 3 miesiące</h2>
+  <p>Cele wynikają z baseline i celują w sygnały, które realnie budują widoczność w 2026 (zapisy, udostępnienia, watch time). Dla małego konta usługowego liczy się <strong>jakość zaangażowania i konwersja na rezerwacje</strong>, nie liczba obserwujących.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Cel</th><th>Metryka</th><th>Wartość docelowa (3M)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Pozycja eksperta</strong> przez karuzele edukacyjne</td><td>ERF (śr.)</td><td><strong>6,0%</strong> (benchmark &lt;1K: 5–8%)</td></tr>
+      <tr><td><strong>Zasięg do nowych</strong> lokalnych klientek przez rolki</td><td>Sends per reach</td><td>śr. <strong>15 udostępnień (DM) / rolkę</strong></td></tr>
+      <tr><td><strong>Zapytania o rezerwację</strong> (konwersja)</td><td>Kliknięcia w link w bio</td><td><strong>30 / miesiąc</strong> (~1 dziennie)</td></tr>
+      <tr><td><strong>Relacja ze społecznością</strong> przez interaktywne Stories</td><td>Interakcje z naklejkami</td><td><strong>≥10% widzów relacji</strong> (~15–20 osób)</td></tr>
+      <tr><td><strong>Retencja</strong> — rolki zatrzymujące widza</td><td>Average watch time</td><td><strong>&gt;60% widzów przekracza 3 sek</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><strong>Wskazówka (Insta SEO):</strong> jako lokalny biznes — słowa kluczowe „Kobido Haugesund / ansiktsmassasje" w bio i opisach zamiast chmury hashtagów.</div>
+</section>
+
+<!-- 12 -->
+<section class="block" id="s12">
+  <span class="sec-eyebrow">12 — Copywriting</span>
+  <h2 class="sec">Standard captionów + szablony</h2>
+  <p>W 2026 caption to nie dopisek — to <strong>Instagram SEO</strong> (pojawia się i w wyszukiwarce IG, i w Google) oraz dźwignia <strong>dwell time</strong>.</p>
+  <h3 class="sub">Zasady</h3>
+  <ul>
+    <li><strong>Hook w 1. linijce</strong> — wartość lub ciekawość przed ucięciem „…więcej".</li>
+    <li><strong>Długość:</strong> dla treści edukacyjnej 800–1600 znaków (mikro-opowieść → dłuższy dwell time).</li>
+    <li><strong>Jedno CTA</strong> — jedna akcja (zapisz / wyślij / skomentuj / link w bio).</li>
+    <li><strong>SEO w tekście</strong> — słowa kluczowe naturalnie („masaż twarzy", „Kobido", „naturalny lifting").</li>
+    <li><strong>Udostępnialność</strong> — pisz tak, by czytelnik pomyślał „muszę to wysłać koleżance".</li>
+  </ul>
+  <h3 class="sub">Checklista oceny podpisu (przed publikacją)</h3>
+  <div class="card">
+    <ul class="check">
+      <li>Hook widoczny przed ucięciem i zatrzymuje scroll?</li>
+      <li>Dostarcza wiedzy / rozwiązuje problem klientki?</li>
+      <li>Słowa kluczowe (Kobido, masaż twarzy, lifting) naturalnie w tekście?</li>
+      <li>Krótkie akapity / lista punktowa?</li>
+      <li>Jedno konkretne CTA na końcu?</li>
+      <li>„Muszę to wysłać koleżance"?</li>
+      <li>Hashtagi ograniczone do 3–5 niszowych?</li>
+    </ul>
+  </div>
+  <h3 class="sub">3 szablony — po norwesku (język konta)</h3>
+  <div class="callout">W brand voice: <strong>ciepły · spokojny · ekspercki · autentyczny</strong>, bez emoji i wykrzykników (zgodnie z głosem marki). Etykiety typów po polsku to notatka robocza — nie część posta.</div>
+  <div class="tpl">
+    <span class="tpl-label">Szablon 1 — Edukacyjny · cel: zapisy</span>
+    <p><strong>Hook:</strong> Hvorfor gjør ikke kremen det Kobido gjør?</p>
+    <p>Mange spør om ansiktsmassasje kan erstatte dyr hudpleie. Sannheten er at de virker best sammen - men Kobido når musklene ingen krem rekker. Tre grunner til at dyp, manuell stimulering er nøkkelen til et naturlig løft:</p>
+    <p>· Løsner spenninger - mykere mimikkrynker<br>· Lymfedrenasje - mindre morgenhevelse<br>· Stimulerer kollagen - huden fornyer seg</p>
+    <p><strong>CTA:</strong> Lagre innlegget, så husker du hvorfor jevnlighet betyr alt for ansiktskonturen.</p>
+    <p class="tags">#kobido #ansiktsmassasje #haugesund</p>
+  </div>
+  <div class="tpl">
+    <span class="tpl-label">Szablon 2 — Storytelling · cel: komentarze</span>
+    <p><strong>Hook:</strong> «Du ser så uthvilt ut» - det vanligste jeg hører etter første time.</p>
+    <p>En klient kom til meg med mye spenning rundt kjeven. Etter 60 minutter med Kobido ble ikke bare ansiktet lettere - hodepinen fra stress forsvant også. Kobido handler om å slippe taket, ikke bare om hud.</p>
+    <p><strong>CTA:</strong> Hvilken del av ansiktet ditt avslører tretthet først - mørke ringer eller sammenbitte lepper? Skriv det i kommentarene, så sier jeg hva du bør begynne med.</p>
+    <p class="tags">#ansiktsmassasje #kobido #haugesund</p>
+  </div>
+  <div class="tpl">
+    <span class="tpl-label">Szablon 3 — Szybka porada · cel: udostępnienia/DM</span>
+    <p><strong>Hook:</strong> Tre sekunder som tar vare på ansiktskonturen din hver morgen.</p>
+    <p>Før du tar på serum, gjør denne ene øvelsen med hendene (se siste reel). En enkel Kobido-teknikk du kan gjøre på badet - den setter i gang sirkulasjonen og åpner blikket. Varige resultater krever jevnlighet, derfor inviterer jeg deg én gang i måneden til en full, dyp behandling.</p>
+    <p><strong>CTA:</strong> Send dette til en venninne som ofte klager på morgenhevelse.</p>
+    <p class="tags">#kobido #ansiktspleie #haugesund</p>
+  </div>
+</section>
+
+<!-- 12a -->
+<section class="block" id="s12a">
+  <span class="sec-eyebrow">12a — Kontekst</span>
+  <h2 class="sec">Algorytm 2026 — nowe taktyki</h2>
+  <p>Większość sygnałów (sends per reach, watch time, oryginalność) jest już wyżej — tu tylko nowe, konkretne taktyki.</p>
+  <div class="card"><strong>4 osobne systemy rankingowe</strong> (Feed / Reels / Stories / Explore) — każdy promuje co innego. Stories = lojalność, Reels = pozyskanie, Feed/Explore = zapisy i zasięg. Strategia treści musi to różnicować (mamy to w celach SMART).</div>
+  <div class="callout warn"><strong>Kara za reposty:</strong> &gt;10 repostów / 30 dni drastycznie ścina widoczność. Publikować treść własną; przeklejki z TikToka (znak wodny) tylko zaszkodzą.</div>
+  <div class="card"><strong>Trial Reels</strong> — testuj nową rolkę na <strong>nie-obserwujących</strong> zanim trafi na profil. Idealne do walidacji hooków bez ryzyka dla feedu. Wpiąć w batching.</div>
+  <div class="card"><strong>Karuzele — hybryda + druga szansa:</strong> mieszaj zdjęcia z krótkimi klipami 3–5 s (max dwell time). Algorytm re-serwuje nieprzewinięte karuzele tym samym osobom — dają „drugie podejście" do zasięgu.</div>
+</section>
+
+<!-- 13 -->
+<section class="block" id="s13">
+  <span class="sec-eyebrow">13 — Produkcja</span>
+  <h2 class="sec">Checklista produkcji rolek</h2>
+  <p>Rolki to nasz silnik pozyskiwania nowych klientek. Ta checklista = standard przed publikacją każdej rolki, do szkolenia i batchowania.</p>
+  <div class="card">
+    <div class="reel-block"><div class="rb-title">1. Hook (pierwsze 3 sek) — próg 60%</div>
+      <ul class="check"><li>Stop-scroll w 1. klatkach: ruch / tekst-headline / zwrot do kamery.</li><li>Zrozumiały bez dźwięku (~50% ogląda na wyciszeniu).</li><li>Cel: &gt;60% widzów zostaje dłużej niż 3 sek.</li></ul></div>
+    <div class="reel-block"><div class="rb-title">2. Watch time / retencja</div>
+      <ul class="check"><li>Completion rate cel &gt;50% → szeroka dystrybucja na Explore.</li><li>Płynne zapętlenie (looping) — koniec łączy się z początkiem.</li></ul></div>
+    <div class="reel-block"><div class="rb-title">3. Długość</div>
+      <ul class="check"><li>15–30 sek: szybka porada / trend (najwyższa retencja).</li><li>30–90 sek: tutorial / storytelling.</li><li>do 3 min: promowane wśród nie-obserwujących (świadomie).</li></ul></div>
+    <div class="reel-block"><div class="rb-title">4. Napisy i dostępność</div>
+      <ul class="check"><li>Napisy wbudowane (oglądanie na wyciszeniu).</li><li>Tekst w „bezpiecznej strefie" (nie pod UI).</li><li>Rozważyć auto-tłumaczenia (zasięg do nowych grup).</li></ul></div>
+    <div class="reel-block"><div class="rb-title">5. Format i oryginalność</div>
+      <ul class="check"><li>9:16, pełny ekran.</li><li>Treść własna (+40–60% zasięgu).</li><li>Zero znaku wodnego TikToka (kara −60–80%).</li></ul></div>
+    <div class="reel-block"><div class="rb-title">6. CTA → sends per reach</div>
+      <ul class="check"><li>CTA na udostępnienie/zapis, nie ogólne „obserwuj": „wyślij to komuś, kto tego potrzebuje".</li></ul></div>
+    <div class="reel-block"><div class="rb-title">7. Trending sound + audio SEO</div>
+      <ul class="check"><li>Trendujący dźwięk pasujący do niszy, użyty w 72h od pojawienia się.</li><li>Wymawiać słowa kluczowe w nagraniu („masaż Kobido") — algorytm indeksuje audio.</li></ul></div>
+  </div>
+  <div class="callout"><strong>Scorecard ostatnich 5 rolek</strong> (do wypełnienia po dostępie): ocena 0–2 pkt w każdej kategorii — hook 3s · napisy · długość · oryginalność · CTA na share · trending sound. Maks 12 pkt/rolkę → ranking + wnioski, które elementy najczęściej kuleją.</div>
+</section>
+
+<!-- 14 -->
+<section class="block" id="s14">
+  <span class="sec-eyebrow">14 — Rynek</span>
+  <h2 class="sec">Macierz konkurencji</h2>
+  <p class="note">Dane bazowe z analizy rynku i raportu badawczego. Metryki ER/kadencji konkurentów — do domiaru po uzyskaniu dostępu i narzędzia.</p>
+  <h3 class="sub">Konkurencja bez realnego IG (lub nieaktywna)</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Gabinet</th><th>Usługa</th><th>Instagram</th><th>Wniosek dla Blissco</th></tr></thead>
+    <tbody>
+      <tr><td>Atlas Helse og velvære</td><td>wellness ogólny</td><td>brak / nieaktywny</td><td>realna konkurencja, ale bez obecności w SoMe — przestrzeń do zajęcia</td></tr>
+      <tr><td>Tjabba / Sawasdee / Niyom Thai</td><td>masaż tajski</td><td>brak / nieaktywny</td><td>inny segment — premium Kobido vs masowy Thai</td></tr>
+      <tr><td>Mya Nikole Nails</td><td>mani / spa</td><td>nieznany</td><td><strong>cross-promo:</strong> klientki nail = klientki Kobido</td></tr>
+    </tbody>
+  </table></div>
+  <h3 class="sub">Konkurencja obecna na Instagramie (do benchmarku)</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Profil</th><th>Obserwujący</th><th>Nisza / pozycjonowanie</th><th>Kobido?</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://www.instagram.com/frakkagjerd_klinikken/">@frakkagjerd_klinikken</a></td><td><strong>263</strong><br>(191 post.)</td><td>klinika <strong>lokalna</strong> (Hi Glow Klinikk, Karmsund/Haugesund); szerokie menu: masaż, peelingi, microneedling, DermaPen, pedicure…</td><td><strong>TAK — 650–990 NOK</strong>, ale 1 z kilkudziesięciu usług, bez marki wokół Kobido</td></tr>
+      <tr><td><a href="https://www.instagram.com/anehedman/">@anehedman</a></td><td><strong>2 190</strong><br>(2 111 post.)</td><td>„Bloom by Ane" — massasjeterapi, energy healing, self-care; lokalizacja do potwierdzenia</td><td>nie (inna nisza — masaż/holistyka)</td></tr>
+      <tr><td><a href="https://www.instagram.com/albatrosspa.no/">@albatrosspa.no</a></td><td><strong>1 612</strong><br>(1 970 post.)</td><td>luksusowy spa-retreat, <strong>Sveio</strong> (pod Haugesund); masaż, ansiktspleie, pakiety, golf, tapas</td><td>nie (inny segment — pełne spa)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn"><strong>Korekta pola walki (ważne):</strong> Kobido lokalnie <strong>już istnieje</strong> — oferuje je klinika Hi Glow / Frakkagjerd (Karmsund, Haugesund) za 650–990 NOK. ALE jako <strong>jedna z kilkudziesięciu pozycji w cenniku</strong>, bez specjalizacji, bez marki wokół Kobido, z mniejszą bazą na IG (<strong>263 &lt; 356 Blissco</strong>).</div>
+  <div class="callout"><strong>Wniosek strategiczny:</strong> przewaga Blissco to nie „jedyna, która robi Kobido", tylko <strong>jedyna specjalistka Kobido</strong> — ekspertka i marka zbudowana wokół jednego rytuału, nie pozycja w menu kliniki (specjalista &gt; generalista). Cena kliniki (650–990 NOK) wyznacza punkt odniesienia dla naszego cennika. Ane Hedman (2 190) i Albatross (1 612) mają większe zasięgi, ale grają w innych niszach (masaż/healing, spa-retreat). <strong>Nisza „specjalistka Kobido / naturalny lifting twarzy w Haugesund" wciąż wolna — to nasze pole.</strong></div>
+  <h3 class="sub">Konta aspiracyjne (wzorce treści Kobido — uczyć się, nie konkurować)</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Konto</th><th>Lokalizacja · obs.</th><th>Czego się uczymy</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://www.instagram.com/naturalfaceliftcare/">@naturalfaceliftcare</a><br><span style="color:var(--fg3);font-size:.86em">Agata Foryszewska</span></td><td>Norwegia (timma.no)<br><strong>2 590</strong></td><td><strong>Najlepszy wzorzec na rynku NO:</strong> „Natural Facelift Specialist" — wąska specjalizacja Kobido + Face Yoga + holistic skincare; sprzedaż sesji + subskrypcja; booking na timma.no. Justyna już obserwuje.</td></tr>
+      <tr><td><a href="https://www.instagram.com/esti.gdansk/">@esti.gdansk</a><br><span style="color:var(--fg3);font-size:.86em">Daria Kozieł</span></td><td>Gdańsk, PL<br><strong>1 109</strong></td><td>Eksperckie pozycjonowanie: „łączę fizjoterapię twarzy z terapiami estetycznymi" (Kobido + cosmolifting). Spójna, intymna estetyka — wzorzec narracji specjalistki.</td></tr>
+      <tr><td><a href="https://www.instagram.com/forest_massasjeterapi/">@forest_massasjeterapi</a><br><span style="color:var(--fg3);font-size:.86em">„Justina"</span></td><td>Norwegia<br><strong>235</strong></td><td>Peer (podobny profil): massasjeterapi + Kobido + dry needling/triggerpunkt. Obserwować, jak rośnie i co publikuje. Justyna już obserwuje.</td></tr>
+      <tr><td><a href="https://www.instagram.com/kobido_amsterdam/">@kobido_amsterdam</a></td><td>Amsterdam, NL<br><strong>2 211</strong></td><td>Czysta marka-specjalista Kobido („Japanese technique of anti aging, lifting and relaxing face massage"); międzynarodowy wzorzec wąskiej specjalizacji i edukacji anti-aging.</td></tr>
+      <tr><td><a href="https://www.instagram.com/blisstherapysandiego/">@blisstherapysandiego</a></td><td>San Diego, USA<br><strong>818</strong></td><td>„Voted Best Massage" — social proof + ton premium, ale przystępny („intuitive, down-to-earth"); masaż + faciale.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Do domiaru po dostępie: ER wybranych kont, liczba rolek/tydz, filary treści → tabela „oni vs my" + lista taktyk wartych podpatrzenia (specjalizacja, Face Yoga jako uzupełnienie Kobido, sprzedaż pakietów/subskrypcji).</p>
+</section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="footer">
+  <img class="logo" src="assets/blissco-logo-biale.png" alt="blissco">
+  <div class="quote">Ro, glød og kvalitet.</div>
+  <p class="meta">Audyt Instagrama @blissco.therapy · wersja 1 · 11.06.2026 · przygotował GMERK (Kacper)<br>
+  Pozycje „do weryfikacji" i „po dostępie" uzupełnimy po uzyskaniu dostępu do konta przez Meta Business Suite.</p>
+</footer>
+
+</body>
+</html>
